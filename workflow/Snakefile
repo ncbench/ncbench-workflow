@@ -1,0 +1,34 @@
+from snakemake.utils import min_version
+from snakemake.remote import SFTP
+
+
+min_version("6.10.0")
+
+
+configfile: "config/config.yaml"
+
+
+envvars:
+    "FTP_PASSWORD"
+
+
+ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWORD"])
+
+
+module benchmark:
+    snakefile: 
+        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="generic")
+    config:
+        config
+
+
+use rule * from benchmark as benchmark_*
+
+
+rule download_ftp:
+    input:
+        ftp.remote("amset.ccg.uni-koeln.de/transfer/VCFs/{path}")
+    output:
+        "resources/ftp/{path}"
+    shell:
+        "cp {input} {output}"
