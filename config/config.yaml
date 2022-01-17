@@ -5,6 +5,7 @@ variant-calls:
   DD_NA12878.dragen-agilent: 
     path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
