@@ -15,24 +15,32 @@ variant-calls:
   DD-gatk-agilent:
     path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-haplotypecaller-agilent:
     path: resources/ftp/wes_agilentv6/GHGA_haplotypecaller_A006850052.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   KI-agilent:
     path: resources/ftp/wes_agilentv6/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-freebayes-agilent:
     path: resources/ftp/wes_agilentv6/TB_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-haplotypecaller-agilent:
     path: resources/ftp/wes_agilentv6/TB_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-ngscn-agilent:
     path: resources/ftp/wes_agilentv6/TB_NGSCN-benchmark-NCCT_var.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-strelka-agilent:
     path: resources/ftp/wes_agilentv6/TB_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
 
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
