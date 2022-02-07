@@ -11,7 +11,7 @@ jobs:
 
       - name: Register FTP server
         run: |
-          ssh-keyscan amset.ccg.uni-koeln.de >> .ssh/known_hosts
+          ssh-keyscan amset.ccg.uni-koeln.de >> ~/.ssh/known_hosts
 
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
