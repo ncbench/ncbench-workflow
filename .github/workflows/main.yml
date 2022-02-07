@@ -1,0 +1,31 @@
+name: benchmark
+on:
+  - push
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Download reference genome
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta'
+      
+      - name: Fix modification dates
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
+
+      - name: Run analysis
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '--cores 1 --conda-cleanup-pkgs cache'
