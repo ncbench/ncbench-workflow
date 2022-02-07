@@ -11,6 +11,7 @@ jobs:
 
       - name: Register FTP server
         run: |
+          mkdir -p ~/.ssh
           ssh-keyscan amset.ccg.uni-koeln.de >> ~/.ssh/known_hosts
 
       - name: Download reference genome
