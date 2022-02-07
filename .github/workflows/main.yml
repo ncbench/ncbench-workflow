@@ -9,6 +9,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Register FTP server
+        run: |
+          ssh-keyscan amset.ccg.uni-koeln.de >> .ssh/known_hosts
+
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
         env:
