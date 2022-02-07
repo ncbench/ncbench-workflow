@@ -1,0 +1,7 @@
+results/**
+resources/**
+logs/**
+.snakemake
+.snakemake/**
+geckodriver.log
+auth.txt
