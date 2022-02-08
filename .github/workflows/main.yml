@@ -31,6 +31,7 @@ jobs:
           snakefile: 'workflow/Snakefile'
           args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
           stagein: |
+            mkdir ~/.ssh/
             cp /github/workspace/known_hosts ~/.ssh/known_hosts
 
 
@@ -43,4 +44,5 @@ jobs:
           snakefile: 'workflow/Snakefile'
           args: '--cores 1 --conda-cleanup-pkgs cache'
           stagein: |
+            mkdir ~/.ssh/
             cp /github/workspace/known_hosts ~/.ssh/known_hosts
