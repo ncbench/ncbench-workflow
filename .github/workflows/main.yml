@@ -46,3 +46,30 @@ jobs:
           stagein: |
             mkdir ~/.ssh/
             cp /github/workspace/known_hosts ~/.ssh/known_hosts
+
+      - name: Run analysis
+        uses: snakemake/snakemake-github-action@v1
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
+          stagein: |
+            mkdir ~/.ssh/
+            cp /github/workspace/known_hosts ~/.ssh/known_hosts
+      
+      - name: Create report
+        uses: snakemake/snakemake-github-action@v1
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '--report report.html'
+
+      - name: Store report
+        uses: EndBug/add-and-commit@v8
+        with:
+          add: report.html
+
