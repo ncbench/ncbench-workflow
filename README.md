@@ -1,3 +1,3 @@
 # WGGC SIG6 small variants benchmarking workflow.
 
-Workdir: /vol/tiny/wggc-benchmark-giab
+Clone and open report.html to see the latest results.
