@@ -9,7 +9,11 @@ configfile: "config/config.yaml"
 
 
 envvars:
-    "FTP_PASSWORD"
+    "FTP_PASSWORD",
+    "ZENODO_TOKEN"
+
+
+include: "rules/common.smk"
 
 
 ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWORD"])
@@ -17,7 +21,7 @@ ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWO
 
 module benchmark:
     snakefile: 
-        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.1.0")
+        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", branch="report-columns")
     config:
         config
 
@@ -30,5 +34,14 @@ rule download_ftp:
         ftp.remote("amset.ccg.uni-koeln.de/transfer/VCFs/{path}")
     output:
         "resources/ftp/{path}"
+    shell:
+        "cp {input} {output}"
+
+
+rule download_zenodo:
+    input:
+        get_zenodo_input
+    output:
+        "resources/zenodo/{callset}/{path}"
     shell:
         "cp {input} {output}"
