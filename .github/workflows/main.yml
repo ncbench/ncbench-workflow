@@ -17,6 +17,7 @@ jobs:
         uses: snakemake/snakemake-github-action@v1
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -26,6 +27,7 @@ jobs:
         uses: snakemake/snakemake-github-action@v1
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -39,6 +41,7 @@ jobs:
         uses: snakemake/snakemake-github-action@v1
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -51,6 +54,7 @@ jobs:
         uses: snakemake/snakemake-github-action@v1
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -63,6 +67,7 @@ jobs:
         uses: snakemake/snakemake-github-action@v1
         env:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
