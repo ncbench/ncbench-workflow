@@ -6,102 +6,143 @@ variant-calls:
     labels:
       site: DD
       pipeline: dragen
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  BO-agilent:
+  BO-agilent-200M:
     labels:
       site: BO
+      reads: 200M
     subcategory: agilent
-    path: resources/ftp/wes_agilentv6/BO_cropbioBonn_WGGC_WES_CN_200M.vcf.gz
-    benchmark: giab-NA12878-agilent
-  CO-agilent:
+    zenodo:
+      deposition: 6472481
+      restricted-access-token-envvar: BO_AGILENT_TOKEN
+      filename: cropbioBonn_WGGC_WES_CN_200M.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+  CO-agilent-200M:
     labels:
       site: CO
+      reads: 200M
     subcategory: agilent
-    path: resources/ftp/wes_agilentv6/CO_SID118711_AID130848.cmb.func.vcf.gz
-    benchmark: giab-NA12878-agilent
+    zenodo:
+      deposition: 6516963
+      restricted-access-token-envvar: CO_AGILENT_TOKEN
+      filename: NA12878_200M_SID118711_AID130848.cmb.func.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+  CO-agilent-75M:
+    labels:
+      site: CO
+      reads: 75M
+    subcategory: agilent
+    zenodo:
+      deposition: 6516963
+      restricted-access-token-envvar: CO_AGILENT_TOKEN
+      filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
   DD-gatk-agilent:
     labels:
       site: DD
       pipeline: gatk
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-haplotypecaller-agilent:
     labels:
       site: GHGA
       pipeline: gatk
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/GHGA_haplotypecaller_A006850052.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   KI-agilent:
     labels:
       site: KI
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-freebayes-agilent:
     labels:
       site: TB
       pipeline: freebayes
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/TB_FreeBayes_NA12878.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-haplotypecaller-agilent:
     labels:
       site: TB
       pipeline: gatk
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/TB_HaplotypeCaller_NA12878.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-ngscn-agilent:
     labels:
       site: TB
       pipeline: ngscn
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/TB_NGSCN-benchmark-NCCT_var.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-strelka-agilent:
     labels:
       site: TB
       pipeline: strelka
+      reads: 200M
     subcategory: agilent
     path: resources/ftp/wes_agilentv6/TB_Strelka_NA12878_variants.vcf.gz
-    benchmark: giab-NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   DUE-varlociraptor:
-    zenodo: 6396505
-    path: resources/zenodo/DUE-varlociraptor/NA12878.present.fdr-controlled.bcf
-    benchmark: giab-NA12878-agilent
+    zenodo: 
+      deposition: 6396505
+      filename: NA12878.present.fdr-controlled.bcf
+    benchmark: giab-NA12878-agilent-200M
     subcategory: agilent
     labels:
       site: DUE
       pipeline: dna-seq-varlociraptor
+      reads: 200M
 
 
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
-  giab-NA12878-agilent:
-    genome: NA12878
+  giab-NA12878-agilent-200M:
+    zenodo: 
+      deposition: 6513789
+      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_AGILENT_TOKEN
+    genome: na12878
     fastqs:
-      - resources/ftp/wes_agilentv6/118711_1.fq.gz
-      - resources/ftp/wes_agilentv6/118711_1.fq.gz
-    target-regions: resources/ftp/wes_agilentv6/Agilent_v6.bed
+      - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R1.fq.gz
+      - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R2.fq.gz
+    target-regions: resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/Agilent_v7.bed
+    # whether given target regions are on hg19
+    grch37: false
+  giab-NA12878-agilent-75M:
+    zenodo:
+      deposition: 6513789
+      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_AGILENT_TOKEN
+    genome: na12878
+    fastqs:
+      - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-75M/A006850052_NA12878_75M_R1.fq.gz
+      - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-75M/A006850052_NA12878_75M_R2.fq.gz
+    target-regions: resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/Agilent_v7.bed # same bed as 200M
     # whether given target regions are on hg19
     grch37: false
 
 # Optional: limit testing and downloading to given regions
 limit-regions:
   activate: false
-  bed: path/to/regions.bed
 
 # Set to true to run analysis on GRCh37 instead of GRCh38
 grch37: false
