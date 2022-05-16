@@ -2,15 +2,15 @@ variant-calls:
   # Listing of callsets and corresponding paths, representing variant call results
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
-  DD-dragen-agilent:
-    labels:
-      site: DD
-      pipeline: dragen
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # DD-dragen-agilent:
+  #   labels:
+  #     site: DD
+  #     pipeline: dragen
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/DD_NA12878.gatk.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   BO-agilent-200M:
     labels:
       site: BO
@@ -41,68 +41,68 @@ variant-calls:
       restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-75M
-  DD-gatk-agilent:
-    labels:
-      site: DD
-      pipeline: gatk
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/DD_NA12878.gatk.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  GHGA-haplotypecaller-agilent:
-    labels:
-      site: GHGA
-      pipeline: gatk
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/GHGA_haplotypecaller_A006850052.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  KI-agilent:
-    labels:
-      site: KI
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  TB-freebayes-agilent:
-    labels:
-      site: TB
-      pipeline: freebayes
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/TB_FreeBayes_NA12878.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  TB-haplotypecaller-agilent:
-    labels:
-      site: TB
-      pipeline: gatk
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/TB_HaplotypeCaller_NA12878.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  TB-ngscn-agilent:
-    labels:
-      site: TB
-      pipeline: ngscn
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/TB_NGSCN-benchmark-NCCT_var.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  TB-strelka-agilent:
-    labels:
-      site: TB
-      pipeline: strelka
-      reads: 200M
-    subcategory: agilent
-    path: resources/ftp/wes_agilentv6/TB_Strelka_NA12878_variants.vcf.gz
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # DD-gatk-agilent:
+  #   labels:
+  #     site: DD
+  #     pipeline: gatk
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/DD_NA12878.gatk.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # GHGA-haplotypecaller-agilent:
+  #   labels:
+  #     site: GHGA
+  #     pipeline: gatk
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/GHGA_haplotypecaller_A006850052.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # KI-agilent:
+  #   labels:
+  #     site: KI
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # TB-freebayes-agilent:
+  #   labels:
+  #     site: TB
+  #     pipeline: freebayes
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/TB_FreeBayes_NA12878.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # TB-haplotypecaller-agilent:
+  #   labels:
+  #     site: TB
+  #     pipeline: gatk
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/TB_HaplotypeCaller_NA12878.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # TB-ngscn-agilent:
+  #   labels:
+  #     site: TB
+  #     pipeline: ngscn
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/TB_NGSCN-benchmark-NCCT_var.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # TB-strelka-agilent:
+  #   labels:
+  #     site: TB
+  #     pipeline: strelka
+  #     reads: 200M
+  #   subcategory: agilent
+  #   path: resources/ftp/wes_agilentv7/TB_Strelka_NA12878_variants.vcf.gz
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   DUE-varlociraptor:
     zenodo: 
       deposition: 6396505
