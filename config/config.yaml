@@ -2,15 +2,6 @@ variant-calls:
   # Listing of callsets and corresponding paths, representing variant call results
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
-  # DD-dragen-agilent:
-  #   labels:
-  #     site: DD
-  #     pipeline: dragen
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/DD_NA12878.gatk.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   bonn-core-unit-agilent-200M:
     labels:
       site: bonn-core-unit
@@ -41,15 +32,16 @@ variant-calls:
   #     deposition: 6541919
   #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
   #     filename: NA12878_HG001_Twist.vcf.gz
-  bonn-core-unit-na24385-wgs:
-    labels:
-      site: bonn-core-unit
-    subcategory: NA24385-WGS
-    benchmark: giab-NA24385-wgs
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: A006200148.vcf.gz
+  # TODO uncomment once WGS is available via zenodo
+  # bonn-core-unit-na24385-wgs:
+  #   labels:
+  #     site: bonn-core-unit
+  #   subcategory: NA12878-WGS
+  #   benchmark: giab-NA12878-wgs
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: A006200148.vcf.gz
   bonn-core-unit-chm:
     labels:
       site: bonn-core-unit
@@ -89,7 +81,7 @@ variant-calls:
       restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-75M
-  
+
   # DD-gatk-agilent:
   #   labels:
   #     site: DD
