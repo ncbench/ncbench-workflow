@@ -38,8 +38,6 @@ jobs:
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
-        env:
-          
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
