@@ -5,6 +5,12 @@ on:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
+    env:
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
+      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
+      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -15,10 +21,6 @@ jobs:
 
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
-        env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -26,10 +28,6 @@ jobs:
       
       - name: Fix modification dates
         uses: snakemake/snakemake-github-action@v1
-        env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -41,11 +39,7 @@ jobs:
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
         env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-          BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-          CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+          
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
@@ -56,12 +50,6 @@ jobs:
       
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
-        env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-          BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-          CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
