@@ -38,21 +38,6 @@ jobs:
             mkdir ~/.ssh/
             cp /github/workspace/known_hosts ~/.ssh/known_hosts
 
-
-      - name: Run analysis
-        uses: snakemake/snakemake-github-action@v1
-        env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-        with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
-          stagein: |
-            mkdir ~/.ssh/
-            cp /github/workspace/known_hosts ~/.ssh/known_hosts
-
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
         env:
