@@ -31,15 +31,16 @@ variant-calls:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_75M.vcf.gz
-  bonn-core-unit-twist:
-    labels:
-      site: bonn-core-unit
-    subcategory: NA12878-twist
-    benchmark: giab-NA12878-twist
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: NA12878_HG001_Twist.vcf.gz
+  # TODO uncomment once twist is available via zenodo
+  # bonn-core-unit-twist:
+  #   labels:
+  #     site: bonn-core-unit
+  #   subcategory: NA12878-twist
+  #   benchmark: giab-NA12878-twist
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: NA12878_HG001_Twist.vcf.gz
   bonn-core-unit-na24385-wgs:
     labels:
       site: bonn-core-unit
@@ -57,7 +58,7 @@ variant-calls:
     zenodo:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: PRJEB13208_b37.vcf.gz
+      filename: PRJEB13208_hg38.vcf.gz
   BO-agilent-200M:
     labels:
       site: bonn-cropbio
