@@ -11,11 +11,58 @@ variant-calls:
   #   path: resources/ftp/wes_agilentv7/DD_NA12878.gatk.vcf.gz
   #   benchmark: giab-NA12878-agilent-200M
   #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  bonn-core-unit-agilent-200M:
+    labels:
+      site: bonn-core-unit
+      reads: 200M
+    subcategory: NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: 118711_200M.vcf.gz
+  bonn-core-unit-agilent-75M:
+    labels:
+      site: bonn-core-unit
+      reads: 75M
+    subcategory: NA12878-agilent
+    benchmark: giab-NA12878-agilent-75M
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: 118711_75M.vcf.gz
+  bonn-core-unit-twist:
+    labels:
+      site: bonn-core-unit
+    subcategory: NA12878-twist
+    benchmark: giab-NA12878-twist
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: NA12878_HG001_Twist.vcf.gz
+  bonn-core-unit-na24385-wgs:
+    labels:
+      site: bonn-core-unit
+    subcategory: NA24385-WGS
+    benchmark: giab-NA24385-wgs
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: A006200148.vcf.gz
+  bonn-core-unit-chm:
+    labels:
+      site: bonn-core-unit
+    subcategory: CHM-eval
+    benchmark: chm-eval
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: PRJEB13208_b37.vcf.gz
   BO-agilent-200M:
     labels:
-      site: BO
+      site: bonn-cropbio
       reads: 200M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6472481
       restricted-access-token-envvar: BO_AGILENT_TOKEN
@@ -23,9 +70,9 @@ variant-calls:
     benchmark: giab-NA12878-agilent-200M
   CO-agilent-200M:
     labels:
-      site: CO
+      site: cologne
       reads: 200M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6516963
       restricted-access-token-envvar: CO_AGILENT_TOKEN
@@ -33,14 +80,15 @@ variant-calls:
     benchmark: giab-NA12878-agilent-200M
   CO-agilent-75M:
     labels:
-      site: CO
+      site: cologne
       reads: 75M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6516963
       restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-75M
+  
   # DD-gatk-agilent:
   #   labels:
   #     site: DD
@@ -108,9 +156,9 @@ variant-calls:
       deposition: 6396505
       filename: NA12878.present.fdr-controlled.bcf
     benchmark: giab-NA12878-agilent-200M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     labels:
-      site: DUE
+      site: duisburg-essen
       pipeline: dna-seq-varlociraptor
       reads: 200M
 
