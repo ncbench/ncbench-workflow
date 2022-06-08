@@ -8,6 +8,7 @@ variant-calls:
       reads: 200M
     subcategory: NA12878-agilent
     benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
@@ -18,6 +19,7 @@ variant-calls:
       reads: 75M
     subcategory: NA12878-agilent
     benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
@@ -42,15 +44,17 @@ variant-calls:
   #     deposition: 6541919
   #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
   #     filename: A006200148.vcf.gz
-  bonn-core-unit-chm:
-    labels:
-      site: bonn-core-unit
-    subcategory: CHM-eval
-    benchmark: chm-eval
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: PRJEB13208_hg38.vcf.gz
+  # TODO uncomment once CHM download works again via sra ftp
+  # bonn-core-unit-chm:
+  #   labels:
+  #     site: bonn-core-unit
+  #   subcategory: CHM-eval
+  #   benchmark: chm-eval
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: PRJEB13208_hg38.vcf.gz
   BO-agilent-200M:
     labels:
       site: bonn-cropbio
