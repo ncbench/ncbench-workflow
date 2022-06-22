@@ -11,6 +11,7 @@ jobs:
       BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
       BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
       CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -38,8 +39,6 @@ jobs:
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
-        env:
-          
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
