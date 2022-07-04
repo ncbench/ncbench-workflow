@@ -124,6 +124,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_high_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-sarek-haplotypecaller-agilent-200M:
     labels:
       site: TB QBiC
@@ -134,6 +135,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_high_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-sarek-strelka-agilent-200M:
     labels:
       site: TB QBiC
@@ -144,6 +146,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_high_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-sarek-freebayes-agilent-75M:
     labels:
       site: TB QBiC
@@ -154,6 +157,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_low_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-sarek-haplotypecaller-agilent-75M:
     labels:
       site: TB QBiC
@@ -164,6 +168,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_low_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   TB-sarek-strelka-agilent-75M:
     labels:
       site: TB QBiC
@@ -174,6 +179,7 @@ variant-calls:
       deposition: 6556340
       filename: WES_low_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   # TB-ngscn-agilent:
   #   labels:
   #     site: TB
