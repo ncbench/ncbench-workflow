@@ -114,24 +114,72 @@ variant-calls:
   #   path: resources/ftp/wes_agilentv7/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
   #   benchmark: giab-NA12878-agilent-200M
   #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # TB-freebayes-agilent:
-  #   labels:
-  #     site: TB
-  #     pipeline: freebayes
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/TB_FreeBayes_NA12878.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # TB-haplotypecaller-agilent:
-  #   labels:
-  #     site: TB
-  #     pipeline: gatk
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/TB_HaplotypeCaller_NA12878.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-freebayes-agilent-200M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 freebayes
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_high_coverage_FreeBayes_NA12878.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-haplotypecaller-agilent-200M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 haplotypecaller
+      reads: 200M
+    subcategory: agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_high_coverage_HaplotypeCaller_NA12878.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-strelka-agilent-200M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 strelka
+      reads: 200M
+    subcategory: agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_high_coverage_Strelka_NA12878_variants.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-freebayes-agilent-75M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 freebayes
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_low_coverage_FreeBayes_NA12878.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-haplotypecaller-agilent-75M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 haplotypecaller
+      reads: 75M
+    subcategory: agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_low_coverage_HaplotypeCaller_NA12878.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  TB-sarek-strelka-agilent-75M:
+    labels:
+      site: TB QBiC
+      pipeline: nf-core/sarek v2.7 strelka
+      reads: 75M
+    subcategory: agilent
+    zenodo:
+      deposition: 6556340
+      filename: WES_low_coverage_Strelka_NA12878_variants.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   # TB-ngscn-agilent:
   #   labels:
   #     site: TB
@@ -141,17 +189,9 @@ variant-calls:
   #   path: resources/ftp/wes_agilentv7/TB_NGSCN-benchmark-NCCT_var.vcf.gz
   #   benchmark: giab-NA12878-agilent-200M
   #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # TB-strelka-agilent:
-  #   labels:
-  #     site: TB
-  #     pipeline: strelka
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/TB_Strelka_NA12878_variants.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   DUE-varlociraptor:
-    zenodo: 
+    zenodo:
       deposition: 6396505
       filename: NA12878.present.fdr-controlled.bcf
     benchmark: giab-NA12878-agilent-200M
@@ -165,7 +205,7 @@ variant-calls:
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
   giab-NA12878-agilent-200M:
-    zenodo: 
+    zenodo:
       deposition: 6513789
       restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_AGILENT_TOKEN
     genome: na12878
