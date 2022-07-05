@@ -129,7 +129,7 @@ variant-calls:
       site: TB QBiC
       pipeline: nf-core/sarek v2.7 haplotypecaller
       reads: 200M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6556340
       filename: WES_high_coverage_HaplotypeCaller_NA12878.vcf.gz
@@ -139,7 +139,7 @@ variant-calls:
       site: TB QBiC
       pipeline: nf-core/sarek v2.7 strelka
       reads: 200M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6556340
       filename: WES_high_coverage_Strelka_NA12878_variants.vcf.gz
@@ -159,7 +159,7 @@ variant-calls:
       site: TB QBiC
       pipeline: nf-core/sarek v2.7 haplotypecaller
       reads: 75M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6556340
       filename: WES_low_coverage_HaplotypeCaller_NA12878.vcf.gz
@@ -169,7 +169,7 @@ variant-calls:
       site: TB QBiC
       pipeline: nf-core/sarek v2.7 strelka
       reads: 75M
-    subcategory: agilent
+    subcategory: NA12878-agilent
     zenodo:
       deposition: 6556340
       filename: WES_low_coverage_Strelka_NA12878_variants.vcf.gz
