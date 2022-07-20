@@ -21,7 +21,7 @@ ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWO
 
 module benchmark:
     snakefile: 
-        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", commit="c490007")#tag="v1.3.5")
+        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.3.6")
     config:
         config
 
