@@ -2,7 +2,6 @@ variant-calls:
   # Listing of callsets and corresponding paths, representing variant call results
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
-  # TODO uncomment once we get an updated token from Bonn
   bonn-core-unit-agilent-200M:
     labels:
       site: bonn-core-unit
@@ -14,7 +13,6 @@ variant-calls:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_200M.vcf.gz
-  TODO uncomment once we get an updated token from Bonn
   bonn-core-unit-agilent-75M:
     labels:
       site: bonn-core-unit
