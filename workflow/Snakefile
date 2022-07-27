@@ -20,8 +20,9 @@ ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWO
 
 
 module benchmark:
-    snakefile: 
-        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.3.6")
+    snakefile:
+        #github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.3.6")
+        "/home/johannes/scms/dna-seq-benchmark/workflow/Snakefile"
     config:
         config
 
@@ -31,17 +32,17 @@ use rule * from benchmark as benchmark_*
 
 rule download_ftp:
     input:
-        ftp.remote("amset.ccg.uni-koeln.de/transfer/VCFs/{path}")
+        ftp.remote("amset.ccg.uni-koeln.de/transfer/VCFs/{path}"),
     output:
-        "resources/ftp/{path}"
+        "resources/ftp/{path}",
     shell:
         "cp {input} {output}"
 
 
 rule download_zenodo:
     input:
-        get_zenodo_input
+        get_zenodo_input,
     output:
-        "resources/zenodo/{section}/{entry}/{path}"
+        "resources/zenodo/{section}/{entry}/{path}",
     shell:
         "mv {input} {output}"
