@@ -29,6 +29,7 @@ variant-calls:
       site: bonn-core-unit
     subcategory: NA12878-twist
     benchmark: giab-NA12878-twist
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
       restricted-access-token-envvar: BO_CORE_UNIT_TOKEN

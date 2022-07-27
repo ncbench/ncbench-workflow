@@ -18,7 +18,7 @@ include: "rules/common.smk"
 
 
 ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWORD"])
-https = HTPP.RemoteProvider()
+https = HTTP.RemoteProvider()
 
 
 module benchmark:
