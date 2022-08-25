@@ -4,4 +4,4 @@ logs/**
 .snakemake
 .snakemake/**
 geckodriver.log
-auth.txt
+auth.sh
