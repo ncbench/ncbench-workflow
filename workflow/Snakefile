@@ -23,7 +23,7 @@ https = HTTP.RemoteProvider()
 
 module benchmark:
     snakefile:
-        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.3.6")
+        github("snakemake-workflows/benchmark-giab", path="workflow/Snakefile", tag="v1.4.0")
     config:
         config
 
