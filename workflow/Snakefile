@@ -10,14 +10,12 @@ configfile: "config/config.yaml"
 
 
 envvars:
-    "FTP_PASSWORD",
     "ZENODO_TOKEN",
 
 
 include: "rules/common.smk"
 
 
-ftp = SFTP.RemoteProvider(username="ngscnbench", password=os.environ["FTP_PASSWORD"])
 https = HTTP.RemoteProvider()
 
 
@@ -29,15 +27,6 @@ module benchmark:
 
 
 use rule * from benchmark as benchmark_*
-
-
-rule download_ftp:
-    input:
-        ftp.remote("amset.ccg.uni-koeln.de/transfer/VCFs/{path}"),
-    output:
-        "resources/ftp/{path}",
-    shell:
-        "mv {input} {output}"
 
 
 rule download_zenodo:
