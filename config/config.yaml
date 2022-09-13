@@ -206,7 +206,6 @@ custom-benchmarks:
   giab-NA12878-agilent-200M:
     zenodo:
       deposition: 6513789
-      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_AGILENT_TOKEN
     genome: na12878
     fastqs:
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R1.fq.gz
@@ -217,7 +216,6 @@ custom-benchmarks:
   giab-NA12878-agilent-75M:
     zenodo:
       deposition: 6513789
-      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_AGILENT_TOKEN
     genome: na12878
     fastqs:
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-75M/A006850052_NA12878_75M_R1.fq.gz
