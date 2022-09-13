@@ -17,10 +17,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: Register FTP server
-        run: |
-          mkdir -p ~/.ssh; ssh-keyscan amset.ccg.uni-koeln.de > known_hosts
-
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
         with:
@@ -34,9 +30,6 @@ jobs:
           directory: '.'
           snakefile: 'workflow/Snakefile'
           args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
-          stagein: |
-            mkdir ~/.ssh/
-            cp /github/workspace/known_hosts ~/.ssh/known_hosts
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
@@ -44,9 +37,6 @@ jobs:
           directory: '.'
           snakefile: 'workflow/Snakefile'
           args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
-          stagein: |
-            mkdir ~/.ssh/
-            cp /github/workspace/known_hosts ~/.ssh/known_hosts
       
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
