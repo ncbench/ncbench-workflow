@@ -29,7 +29,8 @@ jobs:
         with:
           directory: '.'
           snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
+          # TODO use * here once twist exome is accessible again.
+          args: '--cores 1 --touch resources/regions/{giab-NA12878-agilent-200M,giab-NA12878-agilent-75M}/test-regions.cov-*.bed'
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
