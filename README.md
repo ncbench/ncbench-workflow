@@ -10,7 +10,7 @@
    | CHM: | [![URL](https://img.shields.io/badge/github-lh3%2FCHM--eval-orange)](https://github.com/lh3/CHM-eval) |
 2. Run your pipeline on it.
 3. Upload results (VCF or BCF) to zenodo.
-4. Add your results to the [config file](https://github.com/koesterlab/benchmarking-ngscn-sig4/blob/main/config/config.yaml), under variant-calls (see other entries for format).
+4. Create a **pull request** that adds your results to the [config file](https://github.com/koesterlab/benchmarking-ngscn-sig4/blob/main/config/config.yaml), under variant-calls (see other entries for format).
 
 ## Checking out results
 
