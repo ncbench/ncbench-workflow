@@ -46,8 +46,15 @@ jobs:
           snakefile: 'workflow/Snakefile'
           args: '--report report.zip'
 
+      - name: Upload report as artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report.zip
+
       - name: Store report
+        if: github.event_name != 'pull_request'
         uses: EndBug/add-and-commit@v8
         with:
           add: report.zip
-
