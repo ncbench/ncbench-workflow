@@ -21,7 +21,7 @@ https = HTTP.RemoteProvider()
 
 module benchmark:
     snakefile:
-        github("snakemake-workflows/dna-seq-benchmark", path="workflow/Snakefile", tag="v1.5.0")
+        github("snakemake-workflows/dna-seq-benchmark", path="workflow/Snakefile", branch="main")
     config:
         config
 
