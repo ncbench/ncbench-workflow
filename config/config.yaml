@@ -299,7 +299,40 @@ variant-calls:
       site: duisburg-essen
       pipeline: dna-seq-varlociraptor
       reads: 200M
+  TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-200M:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_76_var.vcf.gz 
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
+  TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-75M:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_77_var.vcf.gz 
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
+  TB-IMGAG-megSAP-freebayes-highsensitivity-twist:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+    subcategory: NA12878-twist
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_78_var.vcf.gz
+    benchmark: giab-NA12878-twist
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
