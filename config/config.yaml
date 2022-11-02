@@ -320,7 +320,7 @@ variant-calls:
     zenodo:
       deposition: 7261220
       filename: NA12878x2_77_var.vcf.gz 
-    benchmark: giab-NA12878-agilent-200M
+    benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
   TB-IMGAG-megSAP-freebayes-highsensitivity-twist:
