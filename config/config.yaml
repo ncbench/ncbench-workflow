@@ -298,6 +298,12 @@ variant-calls:
     labels:
       site: duisburg-essen
       pipeline: dna-seq-varlociraptor
+      trimming: cutadapt
+      read-mapping: bwa-mem
+      base-quality-recalibration: gatk
+      realignment: varlociraptor
+      variant-detection: freebayes
+      variant-calling: varlociraptor
       reads: 200M
   TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-200M:
     labels:
