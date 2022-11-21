@@ -303,7 +303,7 @@ variant-calls:
       base-quality-recalibration: gatk
       realignment: varlociraptor
       variant-detection: freebayes
-      variant-calling: varlociraptor
+      genotyping: varlociraptor
       reads: 200M
   TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-200M:
     labels:
