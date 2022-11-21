@@ -344,7 +344,7 @@ variant-calls:
       base-quality-recalibration: none
       realignment: abra2
       variant-detection: freebayes
-      variant-calling: freebayes
+      genotyping: freebayes
     subcategory: NA12878-twist
     zenodo:
       deposition: 7261220
