@@ -303,6 +303,12 @@ variant-calls:
     labels:
       site: TB - IMGAG
       pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      variant-calling: freebayes
       reads: 200M
     subcategory: NA12878-agilent
     zenodo:
@@ -315,6 +321,12 @@ variant-calls:
     labels:
       site: TB - IMGAG
       pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      variant-calling: freebayes
       reads: 75M
     subcategory: NA12878-agilent
     zenodo:
@@ -327,6 +339,12 @@ variant-calls:
     labels:
       site: TB - IMGAG
       pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      variant-calling: freebayes
     subcategory: NA12878-twist
     zenodo:
       deposition: 7261220
