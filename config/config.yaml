@@ -201,7 +201,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename:  ERR1341796_bwa.deepvariant.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-strelka-CHM-ERR1341796:
     labels:
@@ -212,7 +212,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename: ERR1341796_bwa.strelka.variants.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-freebayes-CHM-ERR1341796:
     labels:
@@ -223,7 +223,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename:  ERR1341796_bwa.freebayes.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-haplotypecaller-CHM-ERR1341796:
     labels:
@@ -234,7 +234,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename: ERR1341796_bwa.haplotypecaller.filtered.vcf.gz
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-mpileup-CHM-ERR1341796:
     labels:
@@ -245,7 +245,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename: ERR1341796_bwa_bcftools_mpileup.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-deepvariant-CHM-ERR1341796:
     labels:
@@ -256,7 +256,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename:  ERR1341796_dragmap.deepvariant.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-strelka-CHM-ERR1341796:
     labels:
@@ -267,7 +267,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename:  ERR1341796_dragmap.strelka.variants.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-freebayes-CHM-ERR1341796:
     labels:
@@ -278,7 +278,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename: ERR1341796_dragmap.freebayes.vcf.gz 
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-haplotypecaller-CHM-ERR1341796:
     labels:
@@ -289,7 +289,7 @@ variant-calls:
     zenodo:
       deposition: 7352532
       filename:  ERR1341796_dragmap.haplotypecaller.filtered.vcf.gz
-    benchmark: CHM-eval-ERR1341796
+    benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   # GHGA-sarek-dragmap-haplotypecaller-agilent-200M:
   #   labels:
