@@ -46,8 +46,20 @@ jobs:
           snakefile: 'workflow/Snakefile'
           args: '--report report.zip'
 
+      - uses: 8BitJonny/gh-get-current-pr@2.1.2
+        id: pr
+        with:
+          sha: ${{ github.event.pull_request.head.sha }}
+
+      - name: Upload report as artifact
+        if: steps.pr.outcome == 'success'
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report.zip
+
       - name: Store report
+        if: steps.pr.outcome != 'success'
         uses: EndBug/add-and-commit@v8
         with:
           add: report.zip
-

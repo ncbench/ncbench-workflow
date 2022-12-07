@@ -1,3 +1,4 @@
+chrMT MT
 chrM MT
 chr1 1
 chr2 2

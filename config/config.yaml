@@ -3,38 +3,38 @@ variant-calls:
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
   # TODO add again once new token provided
-  # bonn-core-unit-agilent-200M:
-  #   labels:
-  #     site: bonn-core-unit
-  #     reads: 200M
-  #   subcategory: NA12878-agilent
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  #   zenodo:
-  #     deposition: 6541919
-  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-  #     filename: 118711_200M.vcf.gz
-  # bonn-core-unit-agilent-75M:
-  #   labels:
-  #     site: bonn-core-unit
-  #     reads: 75M
-  #   subcategory: NA12878-agilent
-  #   benchmark: giab-NA12878-agilent-75M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  #   zenodo:
-  #     deposition: 6541919
-  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-  #     filename: 118711_75M.vcf.gz
-  # bonn-core-unit-twist:
-  #   labels:
-  #     site: bonn-core-unit
-  #   subcategory: NA12878-twist
-  #   benchmark: giab-NA12878-twist
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  #   zenodo:
-  #     deposition: 6541919
-  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-  #     filename: NA12878_HG001_Twist.vcf.gz
+  bonn-core-unit-agilent-200M:
+    labels:
+      site: bonn-core-unit
+      reads: 200M
+    subcategory: NA12878-agilent
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: 118711_200M.vcf.gz
+  bonn-core-unit-agilent-75M:
+    labels:
+      site: bonn-core-unit
+      reads: 75M
+    subcategory: NA12878-agilent
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: 118711_75M.vcf.gz
+  bonn-core-unit-twist:
+    labels:
+      site: bonn-core-unit
+    subcategory: NA12878-twist
+    benchmark: giab-NA12878-twist
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+    zenodo:
+      deposition: 6541919
+      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+      filename: NA12878_HG001_Twist.vcf.gz
   # TODO uncomment once WGS is available via zenodo
   # bonn-core-unit-na24385-wgs:
   #   labels:
@@ -59,6 +59,13 @@ variant-calls:
   BO-agilent-200M:
     labels:
       site: bonn-cropbio
+      pipeline: WES_WGGC_AG_Schoof
+      trimming: cutadapt
+      read-mapping: bwa-mem;novoalign
+      base-quality-recalibration: gatk
+      realignment: varlociraptor
+      variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
+      genotyping: varlociraptor
       reads: 200M
     subcategory: NA12878-agilent
     zenodo:
@@ -397,8 +404,65 @@ variant-calls:
     labels:
       site: duisburg-essen
       pipeline: dna-seq-varlociraptor
+      trimming: cutadapt
+      read-mapping: bwa-mem
+      base-quality-recalibration: gatk
+      realignment: varlociraptor
+      variant-detection: freebayes
+      genotyping: varlociraptor
       reads: 200M
+  TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-200M:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      genotyping: freebayes
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_76_var.vcf.gz 
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
+  TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-75M:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      genotyping: freebayes
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_77_var.vcf.gz 
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
+  TB-IMGAG-megSAP-freebayes-highsensitivity-twist:
+    labels:
+      site: TB - IMGAG
+      pipeline: megSAP freebayes - high-sensitivity
+      trimming: seqpurge
+      read-mapping: bwa-mem2
+      base-quality-recalibration: none
+      realignment: abra2
+      variant-detection: freebayes
+      genotyping: freebayes
+    subcategory: NA12878-twist
+    zenodo:
+      deposition: 7261220
+      filename: NA12878x2_78_var.vcf.gz
+    benchmark: giab-NA12878-twist
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
 # Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
