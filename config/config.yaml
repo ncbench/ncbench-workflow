@@ -3,38 +3,38 @@ variant-calls:
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
   # TODO add again once new token provided
-  bonn-core-unit-agilent-200M:
-    labels:
-      site: bonn-core-unit
-      reads: 200M
-    subcategory: NA12878-agilent
-    benchmark: giab-NA12878-agilent-200M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: 118711_200M.vcf.gz
-  bonn-core-unit-agilent-75M:
-    labels:
-      site: bonn-core-unit
-      reads: 75M
-    subcategory: NA12878-agilent
-    benchmark: giab-NA12878-agilent-75M
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: 118711_75M.vcf.gz
-  bonn-core-unit-twist:
-    labels:
-      site: bonn-core-unit
-    subcategory: NA12878-twist
-    benchmark: giab-NA12878-twist
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-    zenodo:
-      deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-      filename: NA12878_HG001_Twist.vcf.gz
+  # bonn-core-unit-agilent-200M:
+  #   labels:
+  #     site: bonn-core-unit
+  #     reads: 200M
+  #   subcategory: NA12878-agilent
+  #   benchmark: giab-NA12878-agilent-200M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: 118711_200M.vcf.gz
+  # bonn-core-unit-agilent-75M:
+  #   labels:
+  #     site: bonn-core-unit
+  #     reads: 75M
+  #   subcategory: NA12878-agilent
+  #   benchmark: giab-NA12878-agilent-75M
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: 118711_75M.vcf.gz
+  # bonn-core-unit-twist:
+  #   labels:
+  #     site: bonn-core-unit
+  #   subcategory: NA12878-twist
+  #   benchmark: giab-NA12878-twist
+  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  #   zenodo:
+  #     deposition: 6541919
+  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
+  #     filename: NA12878_HG001_Twist.vcf.gz
   # TODO uncomment once WGS is available via zenodo
   # bonn-core-unit-na24385-wgs:
   #   labels:

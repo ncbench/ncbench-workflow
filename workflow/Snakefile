@@ -34,6 +34,9 @@ rule download_zenodo:
         get_zenodo_input,
     output:
         "resources/zenodo/{section}/{entry}/{path}",
+    resources:
+        disk_mb=5000,
+        mem_mb=1000,
     shell:
         "mv {input} {output}"
 
@@ -43,5 +46,8 @@ rule download_https:
         https.remote("{url}"),
     output:
         "resources/https/{url}",
+    resources:
+        disk_mb=5000,
+        mem_mb=1000,
     shell:
         "mv {input} {output}"
