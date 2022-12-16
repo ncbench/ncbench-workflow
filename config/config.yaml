@@ -2,7 +2,6 @@ variant-calls:
   # Listing of callsets and corresponding paths, representing variant call results
   # from different pipelines or different configurations of the same pipeline.
   # Multiple entries are possible.
-  # TODO add again once new token provided
   bonn-core-unit-agilent-200M:
     labels:
       site: bonn-core-unit
