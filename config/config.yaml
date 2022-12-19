@@ -219,6 +219,7 @@ variant-calls:
   #   path: resources/ftp/wes_agilentv7/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
   #   benchmark: giab-NA12878-agilent-200M
   #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-freebayes-agilent-200M:
     labels:
       site: TB QBiC
@@ -236,6 +237,7 @@ variant-calls:
       filename: WES_high_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-haplotypecaller-agilent-200M:
     labels:
       site: TB QBiC
@@ -253,6 +255,7 @@ variant-calls:
       filename: WES_high_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-strelka-agilent-200M:
     labels:
       site: TB QBiC
@@ -270,6 +273,7 @@ variant-calls:
       filename: WES_high_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-freebayes-agilent-75M:
     labels:
       site: TB QBiC
@@ -287,6 +291,7 @@ variant-calls:
       filename: WES_low_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-haplotypecaller-agilent-75M:
     labels:
       site: TB QBiC
@@ -304,6 +309,7 @@ variant-calls:
       filename: WES_low_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek27-strelka-agilent-75M:
     labels:
       site: TB QBiC
@@ -321,6 +327,7 @@ variant-calls:
       filename: WES_low_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-freebayes-agilent-200M:
     labels:
       site: TB QBiC
@@ -338,6 +345,7 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-haplotypecaller-agilent-200M:
     labels:
       site: TB QBiC
@@ -355,6 +363,7 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-strelka-agilent-200M:
     labels:
       site: TB QBiC
@@ -372,6 +381,7 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-freebayes-agilent-75M:
     labels:
       site: TB QBiC
@@ -389,6 +399,7 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-haplotypecaller-agilent-75M:
     labels:
       site: TB QBiC
@@ -406,6 +417,7 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-strelka-agilent-75M:
     labels:
       site: TB QBiC
@@ -423,6 +435,7 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-freebayes-twist:
     labels:
       site: TB QBiC
@@ -439,6 +452,7 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-haplotypecaller-twist:
     labels:
       site: TB QBiC
@@ -455,6 +469,7 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+
   TB-sarek311-strelka-twist:
     labels:
       site: TB QBiC
@@ -471,7 +486,7 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  TB-sarek
+
   # TB-ngscn-agilent:
   #   labels:
   #     site: TB
