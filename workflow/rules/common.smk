@@ -12,5 +12,11 @@ def get_zenodo_input(wildcards):
     entry = config[wildcards.section][wildcards.entry]["zenodo"]
     kwargs = dict()
     if "restricted-access-token-envvar" in entry:
-        kwargs["restricted_access_token"] = os.environ[entry["restricted-access-token-envvar"]]
-    return ZenodoRemoteProvider(deposition=entry["deposition"], access_token=os.environ["ZENODO_TOKEN"], **kwargs).remote(wildcards.path)
+        kwargs["restricted_access_token"] = os.environ[
+            entry["restricted-access-token-envvar"]
+        ]
+    return ZenodoRemoteProvider(
+        deposition=entry["deposition"],
+        access_token=os.environ["ZENODO_TOKEN"],
+        **kwargs,
+    ).remote(wildcards.path)
