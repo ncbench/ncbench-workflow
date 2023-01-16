@@ -32,6 +32,13 @@ jobs:
           # TODO use * here once twist exome is accessible again.
           args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
 
+      - name: Perfom dry-run
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: '.'
+          snakefile: 'workflow/Snakefile'
+          args: '-n --use-conda --conda-cleanup-pkgs cache'
+
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
         with:
