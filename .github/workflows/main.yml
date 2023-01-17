@@ -30,7 +30,7 @@ jobs:
           directory: '.'
           snakefile: 'workflow/Snakefile'
           # TODO use * here once twist exome is accessible again.
-          args: '--cores 1 --touch resources/regions/*/test-regions.cov-{high,low,medium}.bed resources/regions/*/target-regions{.raw.,.}bed'
+          args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed resources/regions/*/target-regions*bed'
 
       - name: Perfom dry-run
         uses: snakemake/snakemake-github-action@v1
