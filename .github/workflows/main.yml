@@ -20,31 +20,52 @@ jobs:
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta'
-      
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+
+      - name: Download truthsets
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--use-conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
+
+      # This step is necessary (after downloading the truthsets above) to ensure
+      # that the files coming from the git repo are not triggering reruns
+      # because their modification dates are too new or too old.
+      # (as git does not preserve modification dates)
       - name: Fix modification dates
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          # TODO use * here once twist exome is accessible again.
-          args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
-      
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: >
+            --cores 1 --use-conda --conda-cleanup-pkgs cache
+            --allowed-rules index_variants benchmark_index_vcf_variants 
+            benchmark_rename_contigs benchmark_normalize_calls benchmark_stratify_truth 
+            benchmark_stratify_results benchmark_index_stratified_truth 
+            benchmark_stat_truth benchmark_generate_sdf benchmark_benchmark_variants 
+            benchmark_calc_precision_recall benchmark_collect_stratifications 
+            benchmark_collect_precision_recall benchmark_render_precision_recall_report_config 
+            benchmark_report_precision_recall benchmark_extract_fp_fn 
+            benchmark_collect_fp_fn benchmark_render_fp_fn_report_config 
+            benchmark_report_fp_fn download_zenodo download_https 
+            benchmark_get_truth benchmark_merge_truthsets benchmark_samtools_faidx
+
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--report report.zip'
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--report report.zip"
 
       - uses: 8BitJonny/gh-get-current-pr@2.1.2
         id: pr

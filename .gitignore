@@ -5,3 +5,4 @@ logs/**
 .snakemake/**
 geckodriver.log
 auth.sh
+report.zip
