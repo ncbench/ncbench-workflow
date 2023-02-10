@@ -20,38 +20,39 @@ jobs:
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta'
-      
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+
       - name: Fix modification dates
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
+          directory: "."
+          snakefile: "workflow/Snakefile"
           # TODO use * here once twist exome is accessible again.
-          args: '--cores 1 --touch resources/regions/*/test-regions.cov-*.bed'
-
-      - name: Perfom dry-run
-        uses: snakemake/snakemake-github-action@v1
-        with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '-n --use-conda --conda-cleanup-pkgs cache'
+          args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
-      
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: >
+            --cores 1 --use-conda --conda-cleanup-pkgs cache
+            --allowed-rules index_variants index_vcf_variants rename_contigs normalize_calls
+            stratify_truth stratify_results index_stratified_truth
+            stat_truth generate_sdf benchmark_variants calc_precision_recall
+            collect_stratifications collect_precision_recall render_precision_recall_report_config
+            report_precision_recall extract_fp_fn collect_fp_fn
+            render_fp_fn_report_config report_fp_fn download_zenodo
+            download_https get_truth merge_truthsets
+
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
         with:
-          directory: '.'
-          snakefile: 'workflow/Snakefile'
-          args: '--report report.zip'
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--report report.zip"
 
       - uses: 8BitJonny/gh-get-current-pr@2.1.2
         id: pr
