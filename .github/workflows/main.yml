@@ -24,12 +24,22 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
 
+      - name: Download truthsets
+        uses: snakemake/snakemake-github-action@v1
+        with:
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--cores 1 --until get_truth"
+
+      # This step is necessary (after downloading the truthsets above) to ensure
+      # that the files coming from the git repo are not triggering reruns
+      # because their modification dates are too new or too old.
+      # (as git does not preserve modification dates)
       - name: Fix modification dates
         uses: snakemake/snakemake-github-action@v1
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          # TODO use * here once twist exome is accessible again.
           args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
 
       - name: Run analysis
