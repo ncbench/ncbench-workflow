@@ -58,7 +58,7 @@ jobs:
             benchmark_report_precision_recall benchmark_extract_fp_fn 
             benchmark_collect_fp_fn benchmark_render_fp_fn_report_config 
             benchmark_report_fp_fn download_zenodo download_https 
-            benchmark_get_truth benchmark_merge_truthsets
+            benchmark_get_truth benchmark_merge_truthsets benchmark_samtools_faidx
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
