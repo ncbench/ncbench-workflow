@@ -67,7 +67,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--report report.zip"
 
-      - uses: 8BitJonny/gh-get-current-pr@2.1.2
+      - uses: 8BitJonny/gh-get-current-pr@2.2.0
         id: pr
         with:
           sha: ${{ github.event.pull_request.head.sha }}
