@@ -73,14 +73,14 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
 
       - name: Upload report as artifact
-        if: steps.pr.outcome == 'success'
+        if: steps.PR.outputs.pr_found == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: report
           path: report.zip
 
       - name: Store report
-        if: steps.pr.outcome != 'success'
+        if: steps.PR.outputs.pr_found != 'true'
         uses: EndBug/add-and-commit@v8
         with:
           add: report.zip
