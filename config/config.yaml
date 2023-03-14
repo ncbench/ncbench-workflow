@@ -99,7 +99,7 @@ variant-calls:
       genotyping: varlociraptor
     subcategory: NA12878-twist
     zenodo:
-      deposition: 6472505
+      deposition: 7733586
       filename: cropbioBonn_WGGC_WES_BO_Twist.vcf.gz
     benchmark: giab-NA12878-twist 
   CO-agilent-200M:
