@@ -84,7 +84,7 @@ variant-calls:
       reads: 75M
     subcategory: NA12878-agilent
     zenodo:
-      deposition: 6472488
+      deposition: 7733508
       filename: cropbioBonn_WGGC_WES_CN_75M.vcf.gz
     benchmark: giab-NA12878-agilent-75M
   BO-agilent-twist:
