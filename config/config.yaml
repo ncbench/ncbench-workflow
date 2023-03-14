@@ -71,22 +71,22 @@ variant-calls:
       deposition: 6472481
       filename: cropbioBonn_WGGC_WES_CN_200M.vcf.gz
     benchmark: giab-NA12878-agilent-200M
-  BO-agilent-75M:
-    labels:
-      site: bonn-cropbio
-      pipeline: WES_WGGC_AG_Schoof
-      trimming: cutadapt
-      read-mapping: bwa-mem;novoalign
-      base-quality-recalibration: gatk
-      realignment: varlociraptor
-      variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
-      genotyping: varlociraptor
-      reads: 75M
-    subcategory: NA12878-agilent
-    zenodo:
-      deposition: 7733508
-      filename: cropbioBonn_WGGC_WES_CN_75M.vcf.gz
-    benchmark: giab-NA12878-agilent-75M
+#  BO-agilent-75M:
+#    labels:
+#      site: bonn-cropbio
+#      pipeline: WES_WGGC_AG_Schoof
+#      trimming: cutadapt
+#      read-mapping: bwa-mem;novoalign
+#      base-quality-recalibration: gatk
+#      realignment: varlociraptor
+#      variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
+#      genotyping: varlociraptor
+#      reads: 75M
+#    subcategory: NA12878-agilent
+#    zenodo:
+#      deposition: 7733508
+#      filename: cropbioBonn_WGGC_WES_CN_75M.vcf.gz
+#    benchmark: giab-NA12878-agilent-75M
   BO-agilent-twist:
     labels:
       site: bonn-cropbio
