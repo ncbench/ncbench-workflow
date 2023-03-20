@@ -611,6 +611,7 @@ variant-calls:
       realignment: varlociraptor
       variant-detection: freebayes
       genotyping: varlociraptor
+      url: https://github.com/snakemake-workflows/dna-seq-varlociraptor
       reads: 200M
   TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-200M:
     labels:
