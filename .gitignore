@@ -6,3 +6,4 @@ logs/**
 geckodriver.log
 auth.sh
 report.zip
+report

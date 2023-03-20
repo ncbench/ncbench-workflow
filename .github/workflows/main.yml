@@ -71,16 +71,20 @@ jobs:
         id: pr
         with:
           sha: ${{ github.event.pull_request.head.sha }}
+          filterOutClosed: true
 
       - name: Upload report as artifact
-        if: steps.PR.outputs.pr_found == 'true'
+        if: steps.pr.outputs.pr_found == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: report
           path: report.zip
 
       - name: Store report
-        if: steps.PR.outputs.pr_found != 'true'
+        if: steps.pr.outputs.pr_found != 'true'
         uses: EndBug/add-and-commit@v8
         with:
-          add: report.zip
+          add: report.zip --force
+          default_author: github_actions
+          message: "updated report"
+          push: origin main --force
