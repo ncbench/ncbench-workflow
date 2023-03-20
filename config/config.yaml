@@ -65,6 +65,7 @@ variant-calls:
       realignment: varlociraptor
       variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
       genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
       reads: 200M
     subcategory: NA12878-agilent
     zenodo:
@@ -81,6 +82,7 @@ variant-calls:
       realignment: varlociraptor
       variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
       genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
       reads: 75M
     subcategory: NA12878-agilent
     zenodo:
@@ -97,6 +99,7 @@ variant-calls:
       realignment: varlociraptor
       variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
       genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
     subcategory: NA12878-twist
     zenodo:
       deposition: 7734757
