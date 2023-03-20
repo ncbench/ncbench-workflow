@@ -624,6 +624,7 @@ variant-calls:
       variant-detection: freebayes
       genotyping: freebayes
       reads: 200M
+      url: https://github.com/imgag/megSAP
     subcategory: NA12878-agilent
     zenodo:
       deposition: 7261220
@@ -641,6 +642,7 @@ variant-calls:
       realignment: abra2
       variant-detection: freebayes
       genotyping: freebayes
+      url: https://github.com/imgag/megSAP
       reads: 75M
     subcategory: NA12878-agilent
     zenodo:
@@ -659,6 +661,7 @@ variant-calls:
       realignment: abra2
       variant-detection: freebayes
       genotyping: freebayes
+      url: https://github.com/imgag/megSAP
     subcategory: NA12878-twist
     zenodo:
       deposition: 7261220
