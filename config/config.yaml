@@ -65,13 +65,46 @@ variant-calls:
       realignment: varlociraptor
       variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
       genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
       reads: 200M
     subcategory: NA12878-agilent
     zenodo:
       deposition: 6472481
-      restricted-access-token-envvar: BO_AGILENT_TOKEN
       filename: cropbioBonn_WGGC_WES_CN_200M.vcf.gz
     benchmark: giab-NA12878-agilent-200M
+  BO-agilent-75M:
+    labels:
+      site: bonn-cropbio
+      pipeline: WES_WGGC_AG_Schoof
+      trimming: cutadapt
+      read-mapping: bwa-mem;novoalign
+      base-quality-recalibration: gatk
+      realignment: varlociraptor
+      variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
+      genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 7734975
+      filename: cropbioBonn_WGGC_WES_CN_75M.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+  BO-agilent-twist:
+    labels:
+      site: bonn-cropbio
+      pipeline: WES_WGGC_AG_Schoof
+      trimming: cutadapt
+      read-mapping: bwa-mem;novoalign
+      base-quality-recalibration: gatk
+      realignment: varlociraptor
+      variant-detection: haplotypecaller;bcftools mpileup;deepvariant;freebayes;delly
+      genotyping: varlociraptor
+      url: https://github.com/tgstoecker/WEScropbio
+    subcategory: NA12878-twist
+    zenodo:
+      deposition: 7734757
+      filename: cropbioBonn_WGGC_WES_BO_Twist.vcf.gz
+    benchmark: giab-NA12878-twist 
   CO-agilent-200M:
     labels:
       site: cologne
