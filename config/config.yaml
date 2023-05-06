@@ -11,7 +11,6 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_200M.vcf.gz
   bonn-core-unit-agilent-75M:
     labels:
@@ -22,7 +21,6 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_75M.vcf.gz
   bonn-core-unit-twist:
     labels:
@@ -32,29 +30,7 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: NA12878_HG001_Twist.vcf.gz
-  # TODO uncomment once WGS is available via zenodo
-  # bonn-core-unit-na24385-wgs:
-  #   labels:
-  #     site: bonn-core-unit
-  #   subcategory: NA12878-WGS
-  #   benchmark: giab-NA12878-wgs
-  #   zenodo:
-  #     deposition: 6541919
-  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-  #     filename: A006200148.vcf.gz
-  # TODO uncomment once CHM download works again via sra ftp
-  # bonn-core-unit-chm:
-  #   labels:
-  #     site: bonn-core-unit
-  #   subcategory: CHM-eval
-  #   benchmark: chm-eval
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  #   zenodo:
-  #     deposition: 6541919
-  #     restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
-  #     filename: PRJEB13208_hg38.vcf.gz
   BO-agilent-200M:
     labels:
       site: bonn-cropbio
@@ -125,17 +101,6 @@ variant-calls:
       restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-75M
-
-  # DD-gatk-agilent:
-  #   labels:
-  #     site: DD
-  #     pipeline: gatk
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/DD_NA12878.gatk.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # TODO re-enable once GHGA callsets are single-sample
   GHGA-sarek-dragmap-haplotypecaller-agilent-200M:
     labels:
       site: GHGA-Munich
@@ -324,34 +289,6 @@ variant-calls:
       filename:  ERR1341796_dragmap.haplotypecaller.filtered.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # GHGA-sarek-dragmap-haplotypecaller-agilent-200M:
-  #   labels:
-  #     site: GHGA-Munich
-  #     pipeline: nf-core/sarek v3.1 dragmap-haplotypecaller
-  #     reads: 200M
-  #   subcategory: NA12878-agilent
-  #   zenodo:
-  #     deposition: 7092300
-  #     filename: NA12878_dragmap.haplotypecaller.filtered.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # GHGA-haplotypecaller-agilent:
-  #   labels:
-  #     site: GHGA
-  #     pipeline: gatk
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/GHGA_haplotypecaller_A006850052.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  # KI-agilent:
-  #   labels:
-  #     site: KI
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/KI_Indiv_A006850052_118711_Sample_A006850052_118711.dedup.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
   TB-sarek27-freebayes-agilent-200M:
     labels:
@@ -620,16 +557,6 @@ variant-calls:
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
-  # TB-ngscn-agilent:
-  #   labels:
-  #     site: TB
-  #     pipeline: ngscn
-  #     reads: 200M
-  #   subcategory: agilent
-  #   path: resources/ftp/wes_agilentv7/TB_NGSCN-benchmark-NCCT_var.vcf.gz
-  #   benchmark: giab-NA12878-agilent-200M
-  #   rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   DUE-varlociraptor:
     zenodo:
       deposition: 6396505
@@ -703,7 +630,6 @@ variant-calls:
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 
-# Optional: paths to custom read data, instead of downloading public exome dataset.
 custom-benchmarks:
   giab-NA12878-agilent-200M:
     zenodo:
@@ -713,7 +639,6 @@ custom-benchmarks:
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R1.fq.gz
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R2.fq.gz
     target-regions: resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/Agilent_v7.bed
-    # whether given target regions are on hg19
     grch37: false
   giab-NA12878-agilent-75M:
     zenodo:
@@ -723,23 +648,18 @@ custom-benchmarks:
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-75M/A006850052_NA12878_75M_R1.fq.gz
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-75M/A006850052_NA12878_75M_R2.fq.gz
     target-regions: resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/Agilent_v7.bed # same bed as 200M
-    # whether given target regions are on hg19
     grch37: false
   giab-NA12878-twist:
     zenodo:
       deposition: 7075041
-      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_TWIST_TOKEN
     genome: na12878
     fastqs:
       - resources/zenodo/custom-benchmarks/giab-NA12878-twist/NA12878_HG001_Twist_Bonn_1.fq.gz
       - resources/zenodo/custom-benchmarks/giab-NA12878-twist/NA12878_HG001_Twist_Bonn_2.fq.gz
     target-regions: resources/https/www.twistbioscience.com/sites/default/files/resources/2022-01/Twist_Comprehensive_Exome_Covered_Targets_hg38.bed
-    # whether given target regions are on hg19
     grch37: false
 
-# Optional: limit testing and downloading to given regions
 limit-regions:
   activate: false
 
-# Set to true to run analysis on GRCh37 instead of GRCh38
 grch37: false

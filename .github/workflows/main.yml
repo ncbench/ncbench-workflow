@@ -49,16 +49,6 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: >
             --cores 1 --use-conda --conda-cleanup-pkgs cache
-            --allowed-rules index_variants benchmark_index_vcf_variants 
-            benchmark_rename_contigs benchmark_normalize_calls benchmark_stratify_truth 
-            benchmark_stratify_results benchmark_index_stratified_truth 
-            benchmark_stat_truth benchmark_generate_sdf benchmark_benchmark_variants 
-            benchmark_calc_precision_recall benchmark_collect_stratifications 
-            benchmark_collect_precision_recall benchmark_render_precision_recall_report_config 
-            benchmark_report_precision_recall benchmark_extract_fp_fn 
-            benchmark_collect_fp_fn benchmark_render_fp_fn_report_config 
-            benchmark_report_fp_fn download_zenodo download_https 
-            benchmark_get_truth benchmark_merge_truthsets benchmark_samtools_faidx
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v1

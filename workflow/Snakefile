@@ -6,6 +6,9 @@ from snakemake.remote import HTTP
 min_version("6.10.0")
 
 
+report: "report/report.rst"
+
+
 configfile: "config/config.yaml"
 
 
