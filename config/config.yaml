@@ -11,7 +11,6 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_200M.vcf.gz
   bonn-core-unit-agilent-75M:
     labels:
@@ -22,7 +21,6 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: 118711_75M.vcf.gz
   bonn-core-unit-twist:
     labels:
@@ -32,7 +30,6 @@ variant-calls:
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
     zenodo:
       deposition: 6541919
-      restricted-access-token-envvar: BO_CORE_UNIT_TOKEN
       filename: NA12878_HG001_Twist.vcf.gz
   # TODO uncomment once WGS is available via zenodo
   # bonn-core-unit-na24385-wgs:
@@ -728,7 +725,6 @@ custom-benchmarks:
   giab-NA12878-twist:
     zenodo:
       deposition: 7075041
-      restricted-access-token-envvar: BENCHMARK_GIAB_NA12878_TWIST_TOKEN
     genome: na12878
     fastqs:
       - resources/zenodo/custom-benchmarks/giab-NA12878-twist/NA12878_HG001_Twist_Bonn_1.fq.gz
