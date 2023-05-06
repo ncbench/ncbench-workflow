@@ -1,4 +1,4 @@
-# WGGC SIG6 small variants benchmarking workflow.
+# NCBench continuous small variants benchmarking workflow.
 
 ## Contributing callsets
 
