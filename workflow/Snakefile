@@ -21,13 +21,12 @@ https = HTTP.RemoteProvider()
 
 module benchmark:
     snakefile:
-        github("snakemake-workflows/dna-seq-benchmark", path="workflow/Snakefile", tag="v1.6.5")
+        github("snakemake-workflows/dna-seq-benchmark", path="workflow/Snakefile", tag="v1.6.7")
     config:
         config
 
 
 use rule * from benchmark as benchmark_*
-print(benchmark.used_benchmarks)
 
 rule download_zenodo:
     input:

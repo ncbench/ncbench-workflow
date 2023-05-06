@@ -246,17 +246,18 @@ variant-calls:
       filename: ERR1341796_bwa.strelka.variants.vcf.gz 
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-  GHGA-sarek-bwa-freebayes-CHM-ERR1341796:
-    labels:
-      site: GHGA-Munich
-      pipeline: nf-core/sarek v3.1 bwa-freebayes
-      reads: 500M
-    subcategory: CHM-eval
-    zenodo:
-      deposition: 7352532
-      filename:  ERR1341796_bwa.freebayes.vcf.gz 
-    benchmark: chm-eval
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  # TODO add again after technical issues have been fixed: callset is empty!
+  #GHGA-sarek-bwa-freebayes-CHM-ERR1341796:
+  #  labels:
+  #    site: GHGA-Munich
+  #    pipeline: nf-core/sarek v3.1 bwa-freebayes
+  #    reads: 500M
+  #  subcategory: CHM-eval
+  #  zenodo:
+  #    deposition: 7352532
+  #    filename:  ERR1341796_bwa.freebayes.vcf.gz 
+  #  benchmark: chm-eval
+  #  rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-haplotypecaller-CHM-ERR1341796:
     labels:
       site: GHGA-Munich
