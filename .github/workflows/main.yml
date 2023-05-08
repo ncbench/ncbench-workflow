@@ -57,24 +57,22 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--report report.zip"
 
+      - name: Upload report as artifact
+
+        uses: actions/upload-artifact@v3
+        with:
+          name: report
+          path: report.zip
+
       - uses: 8BitJonny/gh-get-current-pr@2.2.0
         id: pr
         with:
           sha: ${{ github.event.pull_request.head.sha }}
           filterOutClosed: true
 
-      - name: Upload report as artifact
-        if: steps.pr.outputs.pr_found == 'true'
-        uses: actions/upload-artifact@v3
-        with:
-          name: report
-          path: report.zip
-
-      - name: Store report
+      - name: Trigger homepage build
         if: steps.pr.outputs.pr_found != 'true'
-        uses: EndBug/add-and-commit@v8
+        uses: benc-uk/workflow-dispatch@v1
         with:
-          add: report.zip --force
-          default_author: github_actions
-          message: "updated report"
-          push: origin main --force
+          workflow: deploy-page
+          repo: ncbench/ncbench.github.io
