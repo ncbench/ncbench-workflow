@@ -5,6 +5,8 @@ on:
 jobs:
   evaluate:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     env:
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
       ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
