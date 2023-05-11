@@ -78,3 +78,4 @@ jobs:
         with:
           workflow: deploy-page
           repo: ncbench/ncbench.github.io
+          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
