@@ -5,4 +5,4 @@ The results are shown in this Snakemake report.
 
 For checking precision/recall as well as false positives and negatives of all so-far provided callsets, please navigate the menu on the left.
 
-For contributing your own callsets, please check out the instructions at `https://github.com/ncbench/ncbench-workflow`_.
+For contributing your own callsets, please check out the instructions in our `Github repository <https://github.com/ncbench/ncbench-workflow>`_.
