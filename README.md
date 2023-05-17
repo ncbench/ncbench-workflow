@@ -14,4 +14,4 @@
 
 ## Checking out results
 
-Clone and open report.html to see the latest results. Once this repository becomes public, we will host the report via github pages for easier access.
+The latest results for all contributed callsets are shown at https://ncbench.github.io.
