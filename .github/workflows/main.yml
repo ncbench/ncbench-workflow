@@ -73,7 +73,7 @@ jobs:
           filterOutClosed: true
 
       - name: Trigger homepage build
-        if: '(steps.pr.outputs.pr_found != "true") && (github.ref == "main")'
+        if: ${{ (steps.pr.outputs.pr_found != "true") && (github.ref == "main") }}
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: deploy-page
