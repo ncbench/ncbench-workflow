@@ -1,1 +1,2 @@
-Please follow the instructions in the template config.yaml that is copied to your deployment via snakedeploy.
+Simply add your callset under variant-calls, following the structure used in the other already existing callsets.
+Make sure to point to the correct benchmark (CHM-eval, or the two custom WES datasets for the NA12878 GIAB sample that are listed under `custom-benchmarks` in the config file).
