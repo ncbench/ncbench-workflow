@@ -1,5 +1,10 @@
 # NCBench continuous small variants benchmarking workflow.
 
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8268264.svg)](https://doi.org/10.5281/zenodo.8268264)
+
+
 A Snakemake workflow for benchmarking callsets of small genomic variants, using popular benchmark datasets like Genome in a Bottle or CHM-eval.
 
 ## Contributing callsets
