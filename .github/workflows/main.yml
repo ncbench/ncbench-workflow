@@ -16,6 +16,16 @@ jobs:
       BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
       BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          
       - name: Check out repository code
         uses: actions/checkout@v2
 
