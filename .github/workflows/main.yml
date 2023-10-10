@@ -29,7 +29,6 @@ jobs:
           dotnet: true
           haskell: true
           large-packages: true
-          docker-images: true
           swap-storage: true
           
       - name: Check out repository code
