@@ -17,7 +17,7 @@ jobs:
       BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
     steps:
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.2.0
+        uses: jlumbroso/free-disk-space@v1.3.0
         with:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
