@@ -76,7 +76,6 @@ jobs:
           args: "--report report.zip"
 
       - name: Upload report as artifact
-
         uses: actions/upload-artifact@v3
         with:
           name: report
