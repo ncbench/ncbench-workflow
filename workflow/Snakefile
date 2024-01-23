@@ -10,10 +10,6 @@ report: "report/report.rst"
 configfile: "config/config.yaml"
 
 
-envvars:
-    "ZENODO_TOKEN",
-
-
 include: "rules/common.smk"
 
 
