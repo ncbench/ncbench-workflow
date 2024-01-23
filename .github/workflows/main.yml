@@ -41,6 +41,8 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Download truthsets
         uses: snakemake/snakemake-github-action@v1
@@ -48,6 +50,8 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: "--use-conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       # This step is necessary (after downloading the truthsets above) to ensure
       # that the files coming from the git repo are not triggering reruns
@@ -59,6 +63,8 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v1
@@ -67,6 +73,8 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: >
             --cores 1 --use-conda --conda-cleanup-pkgs cache
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v1
@@ -74,6 +82,8 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: "--report report.zip"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Upload report as artifact
 
