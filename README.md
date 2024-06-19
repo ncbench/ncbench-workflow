@@ -20,7 +20,7 @@ A detailed description of the workflow, also outlining all involved insights and
 3. Upload results (VCF or BCF) to zenodo.
 4. Create a **pull request** that adds your results to the [config file](https://github.com/koesterlab/benchmarking-ngscn-sig4/blob/main/config/config.yaml), under variant-calls. Thereby, comply to the following structure:
    ```yaml
-   my-callset:
+   my-callset: # choose a descriptive name for your callset
     labels:
       site: # name of your institute, group, department etc.
       pipeline: # name of the pipeline
@@ -53,5 +53,11 @@ For running ncbench locally, the following steps are required:
 
 1. [Mamba](https://mamba.readthedocs.io) and [Install snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 2. Clone this git repository
-3. Adapt the configuration according to your needs (e.g. add your own callset, and maybe remove all the other callsets if you are only interested in your own).
-4. Run the workflow, first in dryrun mode with `snakemake -n --sdm conda` and then in reality with `snakemake --sdm conda --cores N` with `N` being your desired number of cores. You can also run it on cluster or cloud middleware. The Snakemake [documentation](https://snakemake.readthedocs.io/en/stable/executing/cli.html) provides all the details.
+3. Adapt the configuration according to your needs (e.g. add your own callset, and maybe remove all the other callsets if you are only interested in your own). Whn adding your own callset, you can either refer to a zenodo repository, but also (which in the local case is probably more useful, refer to a local path. The following is a minimal entry for evaluating a local callset, to be added to the `variant-calls` section in the file `config/config.yaml` of your local clone:
+   ```yaml
+   my-callset: # choose a descriptive name for your callset
+    path: # path to vcf/bcf/vcf.gz file containing your variant calls (both SNVs and indels, sorted by coordinate)
+    benchmark: # benchmark to use (one of giab-NA12878-agilent-200M, giab-NA12878-agilent-75M, giab-NA12878-twist, and more, see https://github.com/snakemake-workflows/dna-seq-benchmark/blob/main/workflow/resources/presets.yaml)
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt # rename contigs from UCSC (prefixed with chr) to Ensembl style (remove if your contigs are already in Ensembl style)
+   ```
+5. Run the workflow, first in dryrun mode with `snakemake -n --sdm conda` and then in reality with `snakemake --sdm conda --cores N` with `N` being your desired number of cores. You can also run it on cluster or cloud middleware. The Snakemake [documentation](https://snakemake.readthedocs.io/en/stable/executing/cli.html) provides all the details.
