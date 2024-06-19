@@ -36,8 +36,7 @@ A Snakemake workflow for benchmarking callsets of small genomic variants, using 
       deposition: # zenodo record id (e.g. 7734975)
       filename: # name of vcf/bcf/vcf.gz file in the zenodo record
     benchmark: # benchmark to use (one of giab-NA12878-agilent-200M, giab-NA12878-agilent-75M, giab-NA12878-twist, and more, see https://github.com/snakemake-workflows/dna-seq-benchmark/blob/main/workflow/resources/presets.yaml)
-    # rename contigs from UCSC (prefixed with chr) to Ensembl style (remove if your contigs are already in Ensembl style)
-    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt # rename contigs from UCSC (prefixed with chr) to Ensembl style (remove if your contigs are already in Ensembl style)
    ```
 5. The pull request will be automatically executed with the ncbench workflow and you will be able to download the resulting report with the assessment of your callset as an [artifact](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts) from the github actions CI interface.
 6. Once the pull request has been reviewed and merged, your results will appear in the online report at https://ncbench.github.io.
