@@ -10,13 +10,15 @@ A Snakemake workflow for benchmarking callsets of small genomic variants, using 
 ## Contributing callsets
 
 1. Download raw data:
-   Germline:
+- Germline:
    | dataset                                                                            | link                                                                                                      |
    | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
    | NA12878 Agilent (75M and 200M reads):                                              | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6513789.svg)](https://doi.org/10.5281/zenodo.6513789) |
    | NA12878 Twist (restricted access but you can ask for it via the zenodo interface): | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6907125.svg)](https://doi.org/10.5281/zenodo.6907125) |
    | CHM:                                                                               | [![URL](https://img.shields.io/badge/github-lh3%2FCHM--eval-orange)](https://github.com/lh3/CHM-eval)     |
-   Somatic:
+
+- Somatic:
+
    | dataset    | link tumor bam                                                                                                                                                                           | SRA ID tumor FASTQ | link normal bam                                                                                                                                                                          | SRA ID normal fastq |
    |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
    | SEQC2 WES  | [![URL](https://img.shields.io/badge/github-lh3%2FCHM--eval-orange)](https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WES/WES_EA_T_1.bwa.dedup.bam)     | SRR7890918         | [![URL](https://img.shields.io/badge/github-lh3%2FCHM--eval-orange)](https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WES/WES_EA_N_1.bwa.dedup.bam)     | SRR7890919          |
