@@ -6,6 +6,7 @@
 
 
 A Snakemake workflow for benchmarking callsets of small genomic variants, using popular benchmark datasets like Genome in a Bottle or CHM-eval.
+A detailed description of the workflow, also outlining all involved insights and design decisions can be found under https://doi.org/10.12688/f1000research.140344.1.
 
 ## Contributing callsets
 
@@ -45,3 +46,12 @@ A Snakemake workflow for benchmarking callsets of small genomic variants, using 
 ## Checking out results
 
 The latest results for all contributed callsets are shown at https://ncbench.github.io.
+
+## Running ncbench locally
+
+For running ncbench locally, the following steps are required:
+
+1. [Mamba](https://mamba.readthedocs.io) and [Install snakemake](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
+2. Clone this git repository
+3. Adapt the configuration according to your needs (e.g. add your own callset, and maybe remove all the other callsets if you are only interested in your own).
+4. Run the workflow, first in dryrun mode with `snakemake -n --sdm conda` and then in reality with `snakemake --sdm conda --cores N` with `N` being your desired number of cores. You can also run it on cluster or cloud middleware. The Snakemake [documentation](https://snakemake.readthedocs.io/en/stable/executing/cli.html) provides all the details.
