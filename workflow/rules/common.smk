@@ -9,6 +9,7 @@ def get_zenodo_tag(entry):
 for key, callset in config["variant-calls"].items():
     if "zenodo" in callset:
         if "path" not in callset:
+            print(callset["zenodo"])
             filename = callset["zenodo"]["filename"]
             callset["path"] = f"resources/zenodo/variant-calls/{key}/{filename}"
         tag = get_zenodo_tag(callset["zenodo"])
@@ -24,6 +25,7 @@ for key, callset in config["variant-calls"].items():
 
 def get_zenodo_input(wildcards):
     entry = config[wildcards.section][wildcards.entry]["zenodo"]
+    print(entry)
 
     tag = get_zenodo_tag(entry)
     return getattr(storage, tag)(
