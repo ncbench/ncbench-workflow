@@ -88,7 +88,6 @@ variant-calls:
     subcategory: NA12878-agilent
     zenodo:
       deposition: 6516963
-      restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_200M_SID118711_AID130848.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-200M
   CO-agilent-75M:
@@ -98,7 +97,6 @@ variant-calls:
     subcategory: NA12878-agilent
     zenodo:
       deposition: 6516963
-      restricted-access-token-envvar: CO_AGILENT_TOKEN
       filename: NA12878_75M_SID118711_AID130010.cmb.func.vcf.gz
     benchmark: giab-NA12878-agilent-75M
   GHGA-sarek-dragmap-haplotypecaller-agilent-200M:
