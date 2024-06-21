@@ -29,5 +29,5 @@ def get_zenodo_input(wildcards):
 
     tag = get_zenodo_tag(entry)
     return getattr(storage, tag)(
-        f"zenodo://record/{entry['deposition']}/{entry['filename']}"
+        f"zenodo://record/{entry['deposition']}/{wildcards.path}"
     )
