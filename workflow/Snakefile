@@ -1,7 +1,7 @@
 from snakemake.utils import min_version
 
 
-min_version("6.10.0")
+min_version("8.14.0")
 
 
 report: "report/report.rst"
@@ -18,7 +18,7 @@ module benchmark:
         github(
             "snakemake-workflows/dna-seq-benchmark",
             path="workflow/Snakefile",
-            tag="v1.8.5",
+            tag="v1.11.2",
         )
     config:
         config
