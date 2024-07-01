@@ -73,7 +73,7 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
-            --cores 1 --use-conda --conda-cleanup-pkgs cache
+            --cores 2 --use-conda --conda-cleanup-pkgs cache
           stagein: |
             pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
