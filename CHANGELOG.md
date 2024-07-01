@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.0](https://github.com/ncbench/ncbench-workflow/compare/v1.0.2...v1.1.0) (2024-07-01)
+
+
+### Features
+
+* add seqc2 data source to README ([#40](https://github.com/ncbench/ncbench-workflow/issues/40)) ([14c45f6](https://github.com/ncbench/ncbench-workflow/commit/14c45f684f9877e8f12b387eb1838eb88df484b3))
+
+
+### Bug Fixes
+
+* adapt to Snakemake 8 ([#39](https://github.com/ncbench/ncbench-workflow/issues/39)) ([3cab276](https://github.com/ncbench/ncbench-workflow/commit/3cab276e4e5ec4c721cd44f362e6ee11a4ed8545))
+
+
+### Performance Improvements
+
+* update to dna-seq-benchmark 1.11.3 ([#43](https://github.com/ncbench/ncbench-workflow/issues/43)) ([24a8bbc](https://github.com/ncbench/ncbench-workflow/commit/24a8bbc35ff03c6f8c8dcaca4aca093d27591a9b))
+
 ## [1.0.2](https://github.com/ncbench/ncbench-workflow/compare/v1.0.1...v1.0.2) (2023-11-14)
 
 
