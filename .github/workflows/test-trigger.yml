@@ -1,0 +1,17 @@
+name: test-trigger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Trigger homepage build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: deploy-page
+          repo: ncbench/ncbench.github.io
+          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
