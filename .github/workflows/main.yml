@@ -24,8 +24,8 @@ jobs:
           filterOutClosed: true
 
       - run: |
-          echo "Current PR: ${{ steps.pr.outputs.pr_found }}"
-          echo "Current branch: ${{ github.ref }}"
+          echo "is PR: ${{ steps.pr.outputs.pr_found }}"
+          echo "current branch: ${{ github.ref }}"
 
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.0
@@ -104,7 +104,7 @@ jobs:
           path: report.zip
 
       - name: Trigger homepage build
-        if: ${{ (steps.pr.outputs.pr_found != 'true') && (github.ref == 'main') }}
+        if: ${{ (steps.pr.outputs.pr_found != 'true') && (github.ref == 'refs/heads/main') }}
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: deploy-page
