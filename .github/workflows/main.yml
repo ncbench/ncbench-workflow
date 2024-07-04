@@ -17,6 +17,16 @@ jobs:
       BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: pr
+        with:
+          sha: ${{ github.event.pull_request.head.sha }}
+          filterOutClosed: true
+
+      - run: |
+          echo "Current PR: ${{ steps.pr.outputs.pr_found }}"
+          echo "Current branch: ${{ github.ref }}"
+
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.0
         with:
@@ -92,12 +102,6 @@ jobs:
         with:
           name: report
           path: report.zip
-
-      - uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: pr
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-          filterOutClosed: true
 
       - name: Trigger homepage build
         if: ${{ (steps.pr.outputs.pr_found != 'true') && (github.ref == 'main') }}
