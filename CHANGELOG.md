@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/ncbench/ncbench-workflow/compare/v1.1.0...v1.1.1) (2024-07-08)
+
+
+### Bug Fixes
+
+* use latest release of dna-seq-benchmark ([#44](https://github.com/ncbench/ncbench-workflow/issues/44)) ([b1d6c91](https://github.com/ncbench/ncbench-workflow/commit/b1d6c91dffa250393edc7a6f34cc8adebf0e0fbc))
+
 ## [1.1.0](https://github.com/ncbench/ncbench-workflow/compare/v1.0.2...v1.1.0) (2024-07-01)
 
 
