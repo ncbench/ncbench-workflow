@@ -80,7 +80,7 @@ variant-calls:
     zenodo:
       deposition: 7734757
       filename: cropbioBonn_WGGC_WES_BO_Twist.vcf.gz
-    benchmark: giab-NA12878-twist 
+    benchmark: giab-NA12878-twist
   CO-agilent-200M:
     labels:
       site: cologne
@@ -195,7 +195,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename:  ERR1341796_bwa.deepvariant.vcf.gz 
+      filename: ERR1341796_bwa.deepvariant.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-bwa-strelka-CHM-ERR1341796:
@@ -206,7 +206,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename: ERR1341796_bwa.strelka.variants.vcf.gz 
+      filename: ERR1341796_bwa.strelka.variants.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   # TODO add again after technical issues have been fixed: callset is empty!
@@ -240,7 +240,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename: ERR1341796_bwa_bcftools_mpileup.vcf.gz 
+      filename: ERR1341796_bwa_bcftools_mpileup.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-deepvariant-CHM-ERR1341796:
@@ -251,7 +251,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename:  ERR1341796_dragmap.deepvariant.vcf.gz 
+      filename: ERR1341796_dragmap.deepvariant.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-strelka-CHM-ERR1341796:
@@ -262,7 +262,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename:  ERR1341796_dragmap.strelka.variants.vcf.gz 
+      filename: ERR1341796_dragmap.strelka.variants.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-freebayes-CHM-ERR1341796:
@@ -273,7 +273,7 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename: ERR1341796_dragmap.freebayes.vcf.gz 
+      filename: ERR1341796_dragmap.freebayes.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
   GHGA-sarek-dragmap-haplotypecaller-CHM-ERR1341796:
@@ -284,10 +284,9 @@ variant-calls:
     subcategory: CHM-eval
     zenodo:
       deposition: 7352532
-      filename:  ERR1341796_dragmap.haplotypecaller.filtered.vcf.gz
+      filename: ERR1341796_dragmap.haplotypecaller.filtered.vcf.gz
     benchmark: chm-eval
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-freebayes-agilent-200M:
     labels:
       site: TB QBiC
@@ -305,7 +304,6 @@ variant-calls:
       filename: WES_high_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-haplotypecaller-agilent-200M:
     labels:
       site: TB QBiC
@@ -323,7 +321,6 @@ variant-calls:
       filename: WES_high_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-strelka-agilent-200M:
     labels:
       site: TB QBiC
@@ -341,7 +338,6 @@ variant-calls:
       filename: WES_high_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-freebayes-agilent-75M:
     labels:
       site: TB QBiC
@@ -359,7 +355,6 @@ variant-calls:
       filename: WES_low_coverage_FreeBayes_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-haplotypecaller-agilent-75M:
     labels:
       site: TB QBiC
@@ -377,7 +372,6 @@ variant-calls:
       filename: WES_low_coverage_HaplotypeCaller_NA12878.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek27-strelka-agilent-75M:
     labels:
       site: TB QBiC
@@ -395,7 +389,6 @@ variant-calls:
       filename: WES_low_coverage_Strelka_NA12878_variants.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-freebayes-agilent-200M:
     labels:
       site: TB QBiC
@@ -413,7 +406,6 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-haplotypecaller-agilent-200M:
     labels:
       site: TB QBiC
@@ -431,7 +423,6 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-strelka-agilent-200M:
     labels:
       site: TB QBiC
@@ -449,7 +440,6 @@ variant-calls:
       filename: WES_agilent_high_cov_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-freebayes-agilent-75M:
     labels:
       site: TB QBiC
@@ -467,7 +457,6 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-haplotypecaller-agilent-75M:
     labels:
       site: TB QBiC
@@ -485,7 +474,6 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-strelka-agilent-75M:
     labels:
       site: TB QBiC
@@ -503,7 +491,6 @@ variant-calls:
       filename: WES_agilent_low_cov_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-freebayes-twist:
     labels:
       site: TB QBiC
@@ -520,7 +507,6 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_freebayes.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-haplotypecaller-twist:
     labels:
       site: TB QBiC
@@ -537,7 +523,6 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_haplotypecaller.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-sarek311-strelka-twist:
     labels:
       site: TB QBiC
@@ -554,7 +539,6 @@ variant-calls:
       filename: WES_twist_sarek311_NA12878_strelka.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   DUE-varlociraptor:
     zenodo:
       deposition: 6396505
@@ -590,7 +574,6 @@ variant-calls:
       filename: NA12878x2_76_var.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-IMGAG-megSAP-freebayes-highsensitivity-agilent-75M:
     labels:
       site: TB - IMGAG
@@ -609,7 +592,6 @@ variant-calls:
       filename: NA12878x2_77_var.vcf.gz
     benchmark: giab-NA12878-agilent-75M
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
   TB-IMGAG-megSAP-freebayes-highsensitivity-twist:
     labels:
       site: TB - IMGAG
@@ -627,7 +609,142 @@ variant-calls:
       filename: NA12878x2_78_var.vcf.gz
     benchmark: giab-NA12878-twist
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
-
+  nf-core-sarek-344-strelka2-agilent-75M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: strelka2 v2.9.10
+      genotyping: none
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_75M.strelka.variants.vcf.gzNA12878_75M.strelka.variants.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-deepvariant-agilent-75M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: deepvariant v1.5.0
+      genotyping: none
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_75M.deepvariant.vcf.gzNA12878_75M.deepvariant.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-freebayes-agilent-75M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: freebayes v1.3.6
+      genotyping: none
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_75M.freebayes.vcf.gzNA12878_75M.freebayes.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-haplotypecaller-agilent-75M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: haplotypecaller v4.5.0.0
+      genotyping: none
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_75M.haplotypecaller.filtered.vcf.gzNA12878_75M.haplotypecaller.filtered.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-strelka2-agilent-200M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: strelka2 v2.9.10
+      genotyping: none
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_200M.strelka.variants.vcf.gzNA12878_200M.strelka.variants.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-deepvariant-agilent-200M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: deepvariant v1.5.0
+      genotyping: none
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_200M.deepvariant.vcf.gzNA12878_200M.deepvariant.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-freebayes-agilent-200M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: freebayes v1.3.6
+      genotyping: none
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_200M.freebayes.vcf.gzNA12878_200M.freebayes.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
+  nf-core-sarek-344-haplotypecaller-agilent-200M:
+    labels:
+      site: nf-core
+      pipeline: nf-core/sarek v3.4.4
+      trimming: FastP v0.23.4
+      read-mapping: bwa mem v
+      base-quality-recalibration: gatk4 v4.5.0.0
+      realignment: none
+      variant-detection: haplotypecaller v4.5.0.0
+      genotyping: none
+      reads: 200M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 13742023
+      filename: NA12878_200M.haplotypecaller.filtered.vcf.gzNA12878_200M.haplotypecaller.filtered.vcf.gz
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt
 custom-benchmarks:
   giab-NA12878-agilent-200M:
     zenodo:
@@ -656,8 +773,6 @@ custom-benchmarks:
       - resources/zenodo/custom-benchmarks/giab-NA12878-twist/NA12878_HG001_Twist_Bonn_2.fq.gz
     target-regions: resources/https/www.twistbioscience.com/sites/default/files/resources/2022-01/Twist_Comprehensive_Exome_Covered_Targets_hg38.bed
     grch37: false
-
 limit-regions:
   activate: false
-
 grch37: false
