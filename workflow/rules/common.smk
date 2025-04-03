@@ -1,7 +1,3 @@
-wildcard_constraints:
-    benchmark="|".join(benchmarks),
-
-
 def get_zenodo_tag(entry):
     if "restricted-access-token-envvar" in entry:
         return f"zenodo_{entry['deposition']}"
