@@ -775,4 +775,4 @@ custom-benchmarks:
     grch37: false
 limit-regions:
   activate: false
-grch37: false
+reference-genome: grch38
