@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download reference genome
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@fix/revive-stagein
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -63,7 +63,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Download truthsets
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@fix/revive-stagein
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -77,7 +77,7 @@ jobs:
       # because their modification dates are too new or too old.
       # (as git does not preserve modification dates)
       - name: Fix modification dates
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@fix/revive-stagein
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -87,7 +87,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@fix/revive-stagein
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -98,7 +98,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Create report
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@fix/revive-stagein
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
