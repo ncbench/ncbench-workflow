@@ -90,7 +90,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
+          args: "--cores 1 --touch resources/regions/giab-NA12878-agilent-200M/test-regions.cov-*.bed"
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
