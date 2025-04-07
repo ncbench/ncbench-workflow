@@ -31,6 +31,7 @@ custom-benchmarks:
       - resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/A006850052_NA12878_200M_R2.fq.gz
     target-regions: resources/zenodo/custom-benchmarks/giab-NA12878-agilent-200M/Agilent_v7.bed
     grch37: false
+    high-coverage: false
 limit-regions:
   activate: false
 reference-genome: grch38
