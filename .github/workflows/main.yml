@@ -95,6 +95,17 @@ jobs:
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
 
+      - name: Analysis dryrun
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: >
+            --use-conda --conda-cleanup-pkgs cache --dryrun
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-http
+
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2
         with:
