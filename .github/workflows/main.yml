@@ -66,7 +66,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 1 --use-conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
@@ -76,7 +76,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--use-conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
+          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
@@ -90,7 +90,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 1 --touch resources/regions/*/test-regions.cov-*.bed"
+          args: "--cores 1 --sdm conda --touch resources/regions/*/test-regions.cov-*.bed"
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
@@ -101,7 +101,7 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
-            --use-conda --conda-cleanup-pkgs cache --dryrun
+            --sdm conda --conda-cleanup-pkgs cache --dryrun
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
@@ -112,7 +112,7 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
-            --cores 2 --use-conda --conda-cleanup-pkgs cache --all-temp
+            --cores 2 --sdm conda --conda-cleanup-pkgs cache --all-temp
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
