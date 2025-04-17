@@ -218,7 +218,7 @@ variant-calls:
   #  subcategory: CHM-eval
   #  zenodo:
   #    deposition: 7352532
-  #    filename:  ERR1341796_bwa.freebayes.vcf.gz 
+  #    filename:  ERR1341796_bwa.freebayes.vcf.gz
   #  benchmark: chm-eval
   #  rename-contigs: true
   GHGA-sarek-bwa-haplotypecaller-CHM-ERR1341796:

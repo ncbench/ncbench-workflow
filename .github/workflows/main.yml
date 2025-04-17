@@ -39,7 +39,7 @@ jobs:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
           tool-cache: false
-          
+
           # all of these default to true, but feel free to set to
           # "false" if necessary for your workflow
           android: true
@@ -49,15 +49,6 @@ jobs:
           swap-storage: true
           docker-images: false
 
-      # - name: Increase swapfile
-      #   run: |
-      #     sudo swapoff -a
-      #     sudo fallocate -l 30G /swapfile
-      #     sudo chmod 600 /swapfile
-      #     sudo mkswap /swapfile
-      #     sudo swapon /swapfile
-      #     sudo swapon --show
-          
       - name: Check out repository code
         uses: actions/checkout@v2
 
@@ -94,17 +85,6 @@ jobs:
           stagein: |
             pip install snakemake-storage-plugin-zenodo 
             pip install snakemake-storage-plugin-http
-
-      # - name: Analysis dryrun
-      #   uses: snakemake/snakemake-github-action@v2
-      #   with:
-      #     directory: "."
-      #     snakefile: "workflow/Snakefile"
-      #     args: >
-      #       --sdm conda --conda-cleanup-pkgs cache --dryrun --rerun-triggers mtime
-      #     stagein: |
-      #       pip install snakemake-storage-plugin-zenodo 
-      #       pip install snakemake-storage-plugin-http
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2
