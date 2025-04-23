@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.2.0](https://github.com/ncbench/ncbench-workflow/compare/v1.1.0...v1.2.0) (2025-04-23)
+
+
+### Features
+
+* Add results for nf-core/sarek 3.4.3 ([#47](https://github.com/ncbench/ncbench-workflow/issues/47)) ([7dc8d93](https://github.com/ncbench/ncbench-workflow/commit/7dc8d93fc0c17050cdbd4559b5870cfd217732d9))
+* Add results for sarek 3.4.4 ([#48](https://github.com/ncbench/ncbench-workflow/issues/48)) ([86f9762](https://github.com/ncbench/ncbench-workflow/commit/86f976292e51b56767cfa036905340588e258b94))
+* bump to dna-seq-benchmark 1.12.2 ([#49](https://github.com/ncbench/ncbench-workflow/issues/49)) ([09ce680](https://github.com/ncbench/ncbench-workflow/commit/09ce6805f07db7051abdfbfd4a9f4690a19570fa))
+
+
+### Bug Fixes
+
+* bump to dna-seq-benchmark 1.11.6 ([#46](https://github.com/ncbench/ncbench-workflow/issues/46)) ([6cb20b5](https://github.com/ncbench/ncbench-workflow/commit/6cb20b5bc8ab83aacc580428803971dbc33126a9))
+* use latest release of dna-seq-benchmark ([#44](https://github.com/ncbench/ncbench-workflow/issues/44)) ([b1d6c91](https://github.com/ncbench/ncbench-workflow/commit/b1d6c91dffa250393edc7a6f34cc8adebf0e0fbc))
+
+
+### Performance Improvements
+
+* update to latest dna-seq-benchmark ([8d191de](https://github.com/ncbench/ncbench-workflow/commit/8d191de7f8138976bfa2b9632cf68a256a11e7b5))
+
 ## [1.1.0](https://github.com/ncbench/ncbench-workflow/compare/v1.0.2...v1.1.0) (2024-07-01)
 
 
