@@ -758,8 +758,8 @@ variant-calls:
       reads: 200M
     subcategory: NA12878
     zenodo:
-      deposition: 15481998
-      filename: A006850052_NA12878_75M_BWA.DV.g.vcf
+      deposition: 15487705
+      filename: A006850052_NA12878_200M_BWA_DV_STANDART.vcf
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: true
 custom-benchmarks:
