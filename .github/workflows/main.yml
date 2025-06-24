@@ -2,6 +2,7 @@ name: benchmark
 
 on:
   - push
+  - pull_request
 
 concurrency:
   # Cancel concurrent flows
