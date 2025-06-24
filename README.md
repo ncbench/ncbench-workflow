@@ -29,7 +29,7 @@ A detailed description of the workflow, also outlining all involved insights and
 
 
 2. Run your pipeline on it.
-3. Upload results (VCF or BCF) to zenodo.
+3. Upload results to zenodo. Please use either `vcf.gz` or `.bcf`. You can use `bgzip <your vcf file>.vcf` to compress the file.
 4. Create a **pull request** that adds your results to the [config file](https://github.com/koesterlab/benchmarking-ngscn-sig4/blob/main/config/config.yaml), under variant-calls. Thereby, comply to the following structure:
    ```yaml
    my-callset: # choose a descriptive name for your callset
@@ -47,7 +47,7 @@ A detailed description of the workflow, also outlining all involved insights and
     subcategory: # category of callsets to include this one (see other entries in the config file and align with them if possible)
     zenodo:
       deposition: # zenodo record id (e.g. 7734975)
-      filename: # name of vcf/bcf/vcf.gz file in the zenodo record
+      filename: # name of bcf/vcf.gz file in the zenodo record
     benchmark: # benchmark to use (one of giab-NA12878-agilent-200M, giab-NA12878-agilent-75M, giab-NA12878-twist, and more, see https://github.com/snakemake-workflows/dna-seq-benchmark/blob/main/workflow/resources/presets.yaml)
     rename-contigs: resources/rename-contigs/ucsc-to-ensembl.txt # rename contigs from UCSC (prefixed with chr) to Ensembl style (remove if your contigs are already in Ensembl style)
    ```
