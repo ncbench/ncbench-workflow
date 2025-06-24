@@ -1,12 +1,10 @@
 name: benchmark
 
 on:
-  push:
-    branches:
-      - main
-  pull_request_target:
-    branches:
-      - main
+  - push
+  - fork
+  - workflow_dispatch
+    
 
 concurrency:
   # Cancel concurrent flows
