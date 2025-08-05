@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0](https://github.com/ncbench/ncbench-workflow/compare/v1.2.0...v1.3.0) (2025-08-05)
+
+
+### Features
+
+* add codeowners to automatically get notifications on PRs  ([#53](https://github.com/ncbench/ncbench-workflow/issues/53)) ([b22937a](https://github.com/ncbench/ncbench-workflow/commit/b22937a553832305dc9b53220360872d5bd044cc))
+* bump dna-seq-benchmark to 1.13.0 ([#58](https://github.com/ncbench/ncbench-workflow/issues/58)) ([000debb](https://github.com/ncbench/ncbench-workflow/commit/000debb084936417d320c01e489a50db4afb5ed7))
+
+
+### Bug Fixes
+
+* add note on allowed file formats ([#54](https://github.com/ncbench/ncbench-workflow/issues/54)) ([e8be57d](https://github.com/ncbench/ncbench-workflow/commit/e8be57d2bd9ae377e3e97162f64b07b2226ded74))
+* gha to run benchmark on PRs ([#55](https://github.com/ncbench/ncbench-workflow/issues/55)) ([0fa8012](https://github.com/ncbench/ncbench-workflow/commit/0fa8012ee13984b00f84239c59ad58acc9a83311))
+
+
+### Performance Improvements
+
+* add bot to automatically update github actions monthly ([#52](https://github.com/ncbench/ncbench-workflow/issues/52)) ([270604c](https://github.com/ncbench/ncbench-workflow/commit/270604cf58cd6ee5d8df76008c2f18d333d76812))
+
 ## [1.2.0](https://github.com/ncbench/ncbench-workflow/compare/v1.1.0...v1.2.0) (2025-04-23)
 
 
