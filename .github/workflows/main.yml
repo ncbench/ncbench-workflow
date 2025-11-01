@@ -28,7 +28,7 @@ jobs:
       BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
-      - uses: 8BitJonny/gh-get-current-pr@3.0.0
+      - uses: 8BitJonny/gh-get-current-pr@4.0.0
         id: pr
         with:
           sha: ${{ github.event.pull_request.head.sha }}
@@ -55,7 +55,7 @@ jobs:
           docker-images: false
 
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v2
@@ -114,7 +114,7 @@ jobs:
 
       - name: Upload report as artifact
 
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: report
           path: report.zip
