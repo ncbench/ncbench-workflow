@@ -18,7 +18,7 @@ module benchmark:
         github(
             "snakemake-workflows/dna-seq-benchmark",
             path="workflow/Snakefile",
-            tag="v1.13.0",
+            tag="v1.14.0",
         )
     config:
         config
