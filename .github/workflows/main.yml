@@ -83,7 +83,7 @@ jobs:
       # because their modification dates are too new or too old.
       # (as git does not preserve modification dates)
       - name: Fix modification dates
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@v2.0.1
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -93,7 +93,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@v2.0.1
         timeout-minutes: 360
         with:
           directory: "."
@@ -105,7 +105,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Create report
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@v2.0.1
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
