@@ -779,3 +779,6 @@ custom-benchmarks:
 limit-regions:
   activate: false
 reference-genome: grch38
+
+default-resources:
+  - mem_mb=14336
