@@ -94,7 +94,6 @@ jobs:
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2.0.1
-        timeout-minutes: 360
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
