@@ -5,8 +5,8 @@ on:
     branches:
       - main
   pull_request:
-  workflow_dispatch:  
-    
+  workflow_dispatch:
+
 
 concurrency:
   # Cancel concurrent flows
@@ -65,7 +65,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
       - name: Download truthsets
@@ -75,7 +75,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
       # This step is necessary (after downloading the truthsets above) to ensure
@@ -89,7 +89,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --sdm conda --touch resources/regions/*/test-regions.cov-*.bed"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis
@@ -98,9 +98,9 @@ jobs:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
-            --cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
           stagein: |
-            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
       - name: Create report
@@ -110,7 +110,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--report report.zip"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo 
+            pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
       - name: Upload report as artifact
