@@ -7,46 +7,22 @@ on:
   pull_request:
   workflow_dispatch:
 
-
 concurrency:
   # Cancel concurrent flows
   group: ci-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
-  evaluate:
+  # First job: Download shared resources once to avoid multiple Zenodo requests
+  prepare:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
     env:
-      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
-      - uses: 8BitJonny/gh-get-current-pr@3.0.0
-        id: pr
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-          filterOutClosed: true
-
-      - run: |
-          echo "is PR: ${{ steps.pr.outputs.pr_found }}"
-          echo "current branch: ${{ github.ref }}"
-
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
           tool-cache: false
-
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
           android: true
           dotnet: true
           haskell: true
@@ -77,6 +53,51 @@ jobs:
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
+      - name: Upload shared resources
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-resources
+          path: |
+            resources/reference/
+            resources/truthsets/
+          retention-days: 1
+
+  # Matrix job: Run benchmarks in parallel per subcategory
+  evaluate:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        subcategory:
+          - NA12878-agilent
+          - NA12878-twist
+          - CHM-eval
+    permissions:
+      actions: write
+    env:
+      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+          docker-images: false
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Download shared resources
+        uses: actions/download-artifact@v4
+        with:
+          name: shared-resources
+          path: resources/
+
       # This step is necessary (after downloading the truthsets above) to ensure
       # that the files coming from the git repo are not triggering reruns
       # because their modification dates are too new or too old.
@@ -91,16 +112,51 @@ jobs:
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
-      - name: Run analysis
-        uses: snakemake/snakemake-github-action@v2.0.3
+      - name: Run analysis for ${{ matrix.subcategory }}
+        uses: snakemake/snakemake-github-action@v2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
-            --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --config subcategory=${{ matrix.subcategory }}
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.subcategory }}
+          path: results/
+          retention-days: 1
+
+  # Final job: Combine results and create report
+  report:
+    needs: evaluate
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@3.0.0
+        id: pr
+        with:
+          sha: ${{ github.event.pull_request.head.sha }}
+          filterOutClosed: true
+
+      - run: |
+          echo "is PR: ${{ steps.pr.outputs.pr_found }}"
+          echo "current branch: ${{ github.ref }}"
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: results-*
+          path: results/
+          merge-multiple: true
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v2.0.3
@@ -113,7 +169,6 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Upload report as artifact
-
         uses: actions/upload-artifact@v4
         with:
           name: report
