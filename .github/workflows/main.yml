@@ -128,7 +128,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis for ${{ matrix.subcategory }}
-        uses: snakemake/snakemake-github-action@v2
+        uses: snakemake/snakemake-github-action@v2.0.3
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
