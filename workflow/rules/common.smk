@@ -15,6 +15,16 @@ if "subcategory" in config:
     }
 
 
+# Filter callsets by benchmark if specified via --config benchmark=...
+# This allows splitting CI work further (e.g. giab-NA12878-agilent-75M vs 200M).
+if "benchmark" in config:
+    config["variant-calls"] = {
+        key: callset
+        for key, callset in config["variant-calls"].items()
+        if callset.get("benchmark") == config["benchmark"]
+    }
+
+
 # add path to callsets
 for key, callset in config["variant-calls"].items():
     if "zenodo" in callset:

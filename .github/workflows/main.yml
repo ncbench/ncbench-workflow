@@ -13,74 +13,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # First job: Download shared resources once to avoid multiple Zenodo requests
-  prepare:
-    runs-on: ubuntu-latest
-    env:
-      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
-    steps:
-      - name: Debug - Check if token is set
-        run: |
-          if [ -n "$SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN" ]; then
-            echo "Token is set (length: ${#SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN})"
-          else
-            echo "WARNING: Token is NOT set!"
-          fi
-
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: true
-          docker-images: false
-
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Download reference genome
-        uses: snakemake/snakemake-github-action@v2.0.3
-        with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-
-      - name: Download truthsets
-        uses: snakemake/snakemake-github-action@v2.0.3
-        with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --retries 3 --resources downloads=1 --until benchmark_get_truth"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-
-      - name: Upload shared resources
-        uses: actions/upload-artifact@v4
-        with:
-          name: shared-resources
-          path: |
-            resources/reference/
-            resources/truthsets/
-          retention-days: 1
-
-  # Matrix job: Run benchmarks in parallel per subcategory
+  # Matrix job: Run benchmarks in parallel per benchmark
   evaluate:
-    needs: prepare
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 2
       matrix:
-        subcategory:
-          - NA12878-agilent
-          - NA12878-twist
-          - CHM-eval
+        benchmark:
+          - giab-NA12878-agilent-75M
+          - giab-NA12878-agilent-200M
+          - giab-NA12878-twist
+          - chm-eval
     permissions:
       actions: write
     env:
@@ -107,40 +51,41 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Download shared resources
-        uses: actions/download-artifact@v4
+      - name: Restore caches (conda + snakemake)
+        uses: actions/cache@v4
         with:
-          name: shared-resources
-          path: resources/
+          path: |
+            /home/runner/miniconda3/pkgs
+            /home/runner/miniconda3/envs/snakemake
+            /home/runner/.cache/pip
+            /home/runner/.cache/snakemake
+            .snakemake
+          key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-snakemake-
 
       # This step is necessary (after downloading the truthsets above) to ensure
       # that the files coming from the git repo are not triggering reruns
       # because their modification dates are too new or too old.
       # (as git does not preserve modification dates)
       - name: Fix modification dates
-        uses: snakemake/snakemake-github-action@v2.0.3
-        with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "--cores 1 --sdm conda --touch resources/regions/*/test-regions.cov-*.bed"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+        run: touch resources/regions/*/test-regions.cov-*.bed
 
-      - name: Run analysis for ${{ matrix.subcategory }}
+      - name: Run analysis for ${{ matrix.benchmark }}
         uses: snakemake/snakemake-github-action@v2.0.3
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp --retries 3 --config subcategory=${{ matrix.subcategory }}"
+          args: "--cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }}"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+          show-disk-usage-on-error: true
 
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
-          name: results-${{ matrix.subcategory }}
+          name: results-${{ matrix.benchmark }}
           path: results/
           retention-days: 1
 
@@ -164,6 +109,19 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Restore caches (conda + snakemake)
+        uses: actions/cache@v4
+        with:
+          path: |
+            /home/runner/miniconda3/pkgs
+            /home/runner/miniconda3/envs/snakemake
+            /home/runner/.cache/pip
+            /home/runner/.cache/snakemake
+            .snakemake
+          key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-snakemake-
+
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
@@ -180,6 +138,7 @@ jobs:
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+          show-disk-usage-on-error: true
 
       - name: Upload report as artifact
         uses: actions/upload-artifact@v4
