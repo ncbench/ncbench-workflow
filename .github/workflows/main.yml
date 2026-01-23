@@ -19,6 +19,14 @@ jobs:
     env:
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
+      - name: Debug - Check if token is set
+        run: |
+          if [ -n "$SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN" ]; then
+            echo "Token is set (length: ${#SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN})"
+          else
+            echo "WARNING: Token is NOT set!"
+          fi
+
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
@@ -38,7 +46,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache --retries 3 --resources downloads=1 resources/reference/genome.fasta"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
@@ -48,7 +56,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
+          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --retries 3 --resources downloads=1 --until benchmark_get_truth"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
@@ -76,6 +84,13 @@ jobs:
     permissions:
       actions: write
     env:
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
+      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
+      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
+      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -119,6 +134,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: >
             --cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --retries 3 --resources downloads=1
             --config subcategory=${{ matrix.subcategory }}
           stagein: |
             pip install snakemake-storage-plugin-zenodo
