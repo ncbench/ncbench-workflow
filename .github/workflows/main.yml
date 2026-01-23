@@ -46,7 +46,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache --retries 3 --resources downloads=1 resources/reference/genome.fasta"
+          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
