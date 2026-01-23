@@ -132,10 +132,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: >
-            --cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
-            --retries 3 --resources downloads=1
-            --config subcategory=${{ matrix.subcategory }}
+          args: "--cores 2 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp --retries 3 --resources downloads=1 --config subcategory=${{ matrix.subcategory }}"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
