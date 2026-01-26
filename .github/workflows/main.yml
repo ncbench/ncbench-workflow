@@ -82,7 +82,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --rerun-triggers mtime --all-temp --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }}"
+          args: "--cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --rerun-triggers mtime --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }}"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
