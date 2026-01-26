@@ -13,89 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # PR job: Run a lightweight benchmark to keep CI fast and within disk limits
-  evaluate-pr:
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        benchmark:
-          - chm-eval
-    permissions:
-      actions: write
-    env:
-      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
-      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
-      TMPDIR: /mnt/tmp
-    steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: true
-          docker-images: false
-
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Prepare /mnt workspace
-        run: |
-          sudo mkdir -p /mnt/conda /mnt/tmp
-          sudo chown -R $USER:$USER /mnt/conda /mnt/tmp
-
-      - name: Restore caches (conda + snakemake)
-        uses: actions/cache@v4
-        with:
-          path: |
-            /home/runner/miniconda3/pkgs
-            /home/runner/miniconda3/envs/snakemake
-            /home/runner/.cache/pip
-            /home/runner/.cache/snakemake
-            .snakemake
-          key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-snakemake-
-
-      # This step is necessary (after downloading the truthsets above) to ensure
-      # that the files coming from the git repo are not triggering reruns
-      # because their modification dates are too new or too old.
-      # (as git does not preserve modification dates)
-      - name: Fix modification dates
-        run: touch resources/regions/*/test-regions.cov-*.bed
-
-      - name: Run analysis for ${{ matrix.benchmark }}
-        uses: snakemake/snakemake-github-action@v2.0.3
-        with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "--cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --rerun-triggers mtime --all-temp --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }}"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-          show-disk-usage-on-error: true
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: results-${{ matrix.benchmark }}
-          path: results/
-          retention-days: 1
-
-  # Main/dispatch job: Run full benchmark suite in parallel
+  # Full job: Run full benchmark suite in parallel
   evaluate:
-    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -178,7 +97,7 @@ jobs:
 
   # Final job: Combine results and create report
   report:
-    needs: [evaluate-pr, evaluate]
+    needs: evaluate
     runs-on: ubuntu-latest
     permissions:
       actions: write
