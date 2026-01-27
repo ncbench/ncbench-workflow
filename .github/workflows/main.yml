@@ -88,8 +88,57 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis
-        uses: snakemake/snakemake-github-action@v2.0.3
+        uses: snakemake/snakemake-github-action@v2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          # We specify the specific target for
+          # We specify the specific target for this matrix run
+          args: >
+            results/benchmarks/${{ matrix.sample }}/results.zip
+            --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sample }}
+          path: results/benchmarks/${{ matrix.sample }}/
+          retention-days: 1
+
+  # 3. REPORT: Combine and Deploy
+  report:
+    needs: evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: results/benchmarks/
+
+      - name: Create report
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--report report.zip"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
+
+      - name: Upload final report
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: report.zip
+
+      - name: Trigger homepage build
+        if: github.ref == 'refs/heads/main'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: deploy-page
+          repo: ncbench/ncbench.github.io
+          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
