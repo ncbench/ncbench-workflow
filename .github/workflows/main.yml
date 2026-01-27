@@ -65,14 +65,13 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          # Target only the results for this specific sample
+          # We move the target path to the front to avoid the argument confusion
           args: >
-            --cores 4 --sdm conda --conda-cleanup-pkgs cache 
-            --rerun-triggers mtime 
             results/benchmarks/${{ matrix.sample }}/results.zip
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+            --cores 4 
+            --sdm conda 
+            --conda-cleanup-pkgs cache 
+            --rerun-triggers mtime
 
       - name: Upload results
         uses: actions/upload-artifact@v4
