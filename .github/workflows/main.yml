@@ -99,32 +99,49 @@ jobs:
           pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
           snakemake --version
 
-      - name: Debug - Dry-run Snakemake
+      - name: Debug - Show config and DAG info
+        shell: bash -l {0}
+        run: |
+          echo "=== Benchmark: ${{ matrix.benchmark }} ==="
+          echo "=== Python version ==="
+          python --version
+          echo "=== Snakemake version ==="
+          snakemake --version
+          echo "=== Config filtering check ==="
+          python -c "
+          import yaml
+          with open('config/config.yaml') as f:
+              config = yaml.safe_load(f)
+          benchmark = '${{ matrix.benchmark }}'
+          filtered = {k: v for k, v in config.get('variant-calls', {}).items() if v.get('benchmark') == benchmark}
+          print(f'Callsets for {benchmark}: {list(filtered.keys())}')
+          print(f'Number of callsets: {len(filtered)}')
+          "
+
+      - name: Debug - Dry-run Snakemake with reasons
         shell: bash -l {0}
         run: |
           echo "=== Dry-run to show what jobs would run ==="
           snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
             --cores 2 --sdm conda --conda-prefix /mnt/conda \
             --config benchmark=${{ matrix.benchmark }} \
-            --dry-run -p 2>&1 || echo "Dry-run exit code: $?"
+            --dry-run --printshellcmds --reason 2>&1 | head -200 || echo "Dry-run exit code: $?"
 
-      - name: Run Snakemake directly
+      - name: Run Snakemake
         shell: bash -l {0}
         run: |
-          set -x
           echo "=== Starting Snakemake run ==="
           snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
             --cores 2 --sdm conda --conda-prefix /mnt/conda \
             --conda-cleanup-pkgs cache --conda-cleanup-envs \
             --retries 3 --resources downloads=1 \
             --config benchmark=${{ matrix.benchmark }} \
-            --forceall --printshellcmds --verbose \
-            2>&1 || {
+            --printshellcmds 2>&1 || {
               EXIT_CODE=$?
               echo "=== Snakemake failed with exit code: $EXIT_CODE ==="
               echo "=== Checking .snakemake/log/ ==="
               ls -la .snakemake/log/ 2>/dev/null || echo "No log directory"
-              cat .snakemake/log/*.log 2>/dev/null | tail -100 || echo "No logs found"
+              cat .snakemake/log/*.log 2>/dev/null | tail -200 || echo "No logs found"
               exit $EXIT_CODE
             }
           echo "=== Snakemake completed successfully ==="
@@ -182,6 +199,11 @@ jobs:
           pattern: results-*
           path: results/
           merge-multiple: true
+
+      - name: Debug - Show downloaded results
+        run: |
+          echo "=== Downloaded results structure ==="
+          find results/ -type f 2>/dev/null | head -100 || echo "No files found"
 
       - name: Setup Snakemake environment
         uses: conda-incubator/setup-miniconda@v3
