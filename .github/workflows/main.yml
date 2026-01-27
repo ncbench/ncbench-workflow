@@ -65,7 +65,7 @@ jobs:
             /home/runner/miniconda3/envs/snakemake
             /home/runner/.cache/pip
             /home/runner/.cache/snakemake
-            .snakemake
+            /mnt/conda
           key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
           restore-keys: |
             ${{ runner.os }}-snakemake-
