@@ -56,6 +56,7 @@ jobs:
         uses: mamba-org/setup-micromamba@v1
         with:
           environment-name: snakemake-env
+          channels: conda-forge,bioconda
           create-args: >-
             python=3.11
             snakemake
