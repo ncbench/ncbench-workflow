@@ -66,9 +66,9 @@ jobs:
             /home/runner/.cache/pip
             /home/runner/.cache/snakemake
             /mnt/conda
-          key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
+          key: ${{ runner.os }}-conda-v2-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-snakemake-
+            ${{ runner.os }}-conda-v2-
 
       # This step is necessary (after downloading the truthsets above) to ensure
       # that the files coming from the git repo are not triggering reruns
@@ -77,16 +77,30 @@ jobs:
       - name: Fix modification dates
         run: touch resources/regions/*/test-regions.cov-*.bed
 
+      - name: Debug - List results directory before run
+        run: |
+          echo "=== Contents of results/ before run ==="
+          ls -la results/ 2>/dev/null || echo "results/ does not exist"
+          echo "=== Contents of .snakemake/ before run ==="
+          ls -la .snakemake/ 2>/dev/null || echo ".snakemake/ does not exist"
+
       - name: Run analysis for ${{ matrix.benchmark }}
         uses: snakemake/snakemake-github-action@v2.0.3
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }}"
+          args: "benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }} --forceall"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
           show-disk-usage-on-error: true
+
+      - name: Debug - List results directory after run
+        if: always()
+        run: |
+          echo "=== Contents of results/ after run ==="
+          ls -la results/ 2>/dev/null || echo "results/ does not exist"
+          find results/ -type f 2>/dev/null | head -50 || true
 
       - name: Upload results
         uses: actions/upload-artifact@v4
@@ -117,18 +131,16 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Restore caches (conda + snakemake)
+      - name: Restore caches (conda)
         uses: actions/cache@v4
         with:
           path: |
             /home/runner/miniconda3/pkgs
             /home/runner/miniconda3/envs/snakemake
             /home/runner/.cache/pip
-            /home/runner/.cache/snakemake
-            .snakemake
-          key: ${{ runner.os }}-snakemake-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
+          key: ${{ runner.os }}-conda-v2-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-snakemake-
+            ${{ runner.os }}-conda-v2-
 
       - name: Download all results
         uses: actions/download-artifact@v4
