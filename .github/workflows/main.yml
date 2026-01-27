@@ -89,10 +89,14 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }} --forceall"
+          args: "benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }} --forceall --verbose --printshellcmds"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+            echo "=== Dry-run to see what jobs would be executed ==="
+            snakemake --directory . --snakefile workflow/Snakefile benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --config benchmark=${{ matrix.benchmark }} --dry-run --reason || echo "Dry-run failed or no jobs"
+            echo "=== Checking rule inputs with --summary ==="
+            snakemake --directory . --snakefile workflow/Snakefile benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --config benchmark=${{ matrix.benchmark }} --summary 2>&1 | head -100 || echo "Summary failed"
           show-disk-usage-on-error: true
 
       - name: Debug - List results directory after run
