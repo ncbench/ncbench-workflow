@@ -84,20 +84,50 @@ jobs:
           echo "=== Contents of .snakemake/ before run ==="
           ls -la .snakemake/ 2>/dev/null || echo ".snakemake/ does not exist"
 
-      - name: Run analysis for ${{ matrix.benchmark }}
-        uses: snakemake/snakemake-github-action@v2.0.3
+      - name: Setup Snakemake environment
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --conda-cleanup-pkgs cache --conda-cleanup-envs --retries 3 --resources downloads=1 --config benchmark=${{ matrix.benchmark }} --forceall --verbose --printshellcmds"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-            echo "=== Dry-run to see what jobs would be executed ==="
-            snakemake --directory . --snakefile workflow/Snakefile benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --config benchmark=${{ matrix.benchmark }} --dry-run --reason || echo "Dry-run failed or no jobs"
-            echo "=== Checking rule inputs with --summary ==="
-            snakemake --directory . --snakefile workflow/Snakefile benchmark_all --cores 2 --sdm conda --conda-prefix /mnt/conda --config benchmark=${{ matrix.benchmark }} --summary 2>&1 | head -100 || echo "Summary failed"
-          show-disk-usage-on-error: true
+          miniforge-version: latest
+          channels: conda-forge,bioconda
+          activate-environment: snakemake
+          python-version: "3.12"
+
+      - name: Install Snakemake and plugins
+        shell: bash -l {0}
+        run: |
+          conda install -n snakemake -c conda-forge -c bioconda snakemake -y
+          pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
+          snakemake --version
+
+      - name: Debug - Dry-run Snakemake
+        shell: bash -l {0}
+        run: |
+          echo "=== Dry-run to show what jobs would run ==="
+          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
+            --cores 2 --sdm conda --conda-prefix /mnt/conda \
+            --config benchmark=${{ matrix.benchmark }} \
+            --dry-run -p 2>&1 || echo "Dry-run exit code: $?"
+
+      - name: Run Snakemake directly
+        shell: bash -l {0}
+        run: |
+          set -x
+          echo "=== Starting Snakemake run ==="
+          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
+            --cores 2 --sdm conda --conda-prefix /mnt/conda \
+            --conda-cleanup-pkgs cache --conda-cleanup-envs \
+            --retries 3 --resources downloads=1 \
+            --config benchmark=${{ matrix.benchmark }} \
+            --forceall --printshellcmds --verbose \
+            2>&1 || {
+              EXIT_CODE=$?
+              echo "=== Snakemake failed with exit code: $EXIT_CODE ==="
+              echo "=== Checking .snakemake/log/ ==="
+              ls -la .snakemake/log/ 2>/dev/null || echo "No log directory"
+              cat .snakemake/log/*.log 2>/dev/null | tail -100 || echo "No logs found"
+              exit $EXIT_CODE
+            }
+          echo "=== Snakemake completed successfully ==="
 
       - name: Debug - List results directory after run
         if: always()
@@ -153,16 +183,25 @@ jobs:
           path: results/
           merge-multiple: true
 
-      - name: Create report
-        uses: snakemake/snakemake-github-action@v2.0.3
+      - name: Setup Snakemake environment
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          args: "--report report.zip benchmark_all"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-          show-disk-usage-on-error: true
+          miniforge-version: latest
+          channels: conda-forge,bioconda
+          activate-environment: snakemake
+          python-version: "3.12"
+
+      - name: Install Snakemake and plugins
+        shell: bash -l {0}
+        run: |
+          conda install -n snakemake -c conda-forge -c bioconda snakemake -y
+          pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
+
+      - name: Create report
+        shell: bash -l {0}
+        run: |
+          snakemake --directory . --snakefile workflow/Snakefile \
+            --report report.zip benchmark_all
 
       - name: Upload report as artifact
         uses: actions/upload-artifact@v4
