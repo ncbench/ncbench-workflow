@@ -6,8 +6,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ci-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
-  # 1. SETUP: Detect samples dynamically
+  # 1. SETUP: Dynamically find the samples
   setup:
     runs-on: ubuntu-latest
     outputs:
@@ -16,11 +20,10 @@ jobs:
       - uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          # Detect sample folders and format as a JSON array for the matrix
           SAMPLES=$(ls -d resources/regions/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
           echo "samples=$SAMPLES" >> $GITHUB_OUTPUT
 
-  # 2. EVALUATE: Run parallel benchmarks
+  # 2. EVALUATE: The matrix-based analysis
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
@@ -28,11 +31,18 @@ jobs:
       fail-fast: false
       matrix:
         sample: ${{ fromJson(needs.setup.outputs.samples) }}
-    
-    steps:
-      - uses: actions/checkout@v4
+    env:
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
+      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
+      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
+      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
+      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
 
-      - name: Free Disk Space
+    steps:
+      - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
@@ -41,94 +51,45 @@ jobs:
           haskell: true
           large-packages: true
           swap-storage: true
+          docker-images: false
 
-      - name: Setup Snakemake + Plugins
-        uses: mamba-org/setup-micromamba@v1
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Download reference genome
+        uses: snakemake/snakemake-github-action@v2
         with:
-          environment-name: snakemake-env
-          condarc: |
-            channels:
-              - conda-forge
-              - bioconda
-          create-args: >-
-            python=3.11
-            snakemake
-            snakemake-storage-plugin-zenodo
-            snakemake-storage-plugin-http
-          cache-environment: true
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
 
-      - name: Run Snakemake
-        shell: bash -el {0}
-        env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-          SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
-          BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-          BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-          CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-          BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-          BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
-        run: |
-          snakemake \
-            results/benchmarks/${{ matrix.sample }}/results.zip \
-            --cores 4 \
-            --sdm conda \
-            --conda-cleanup-pkgs cache \
-            --rerun-triggers mtime
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
+      - name: Download truthsets
+        uses: snakemake/snakemake-github-action@v2
         with:
-          name: ${{ matrix.sample }}
-          path: results/benchmarks/${{ matrix.sample }}/
-          retention-days: 1
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
 
-  # 3. REPORT: Combine parallel results into a single report
-  report:
-    needs: [setup, evaluate]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Snakemake + Plugins
-        uses: mamba-org/setup-micromamba@v1
+      - name: Fix modification dates
+        uses: snakemake/snakemake-github-action@v2
         with:
-          environment-name: snakemake-env
-          condarc: |
-            channels:
-              - conda-forge
-              - bioconda
-          create-args: >-
-            python=3.11
-            snakemake
-            snakemake-storage-plugin-zenodo
-            snakemake-storage-plugin-http
-          cache-environment: true
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          # Only touch the files for THIS matrix sample
+          args: "--cores 1 --sdm conda --touch resources/regions/${{ matrix.sample }}/test-regions.cov-*.bed"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
 
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - name: Run analysis
+        uses: snakemake/snakemake-github-action@v2
         with:
-          path: results/benchmarks/
-
-      - name: Generate Report
-        shell: bash -el {0}
-        run: snakemake --report report.zip
-
-      - name: Upload report
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-report
-          path: report.zip
-
-  # 4. DEPLOY: Trigger external update
-  deploy:
-    needs: report
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger homepage build
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: deploy-page
-          repo: ncbench/ncbench.github.io
-          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          # We specify the specific target for
