@@ -2,241 +2,57 @@ name: benchmark
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
-concurrency:
-  # Cancel concurrent flows
-  group: ci-${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
-  # Full job: Run full benchmark suite in parallel
+  # 1. NEW JOB: Detect samples
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      samples: ${{ steps.set-matrix.outputs.samples }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        run: |
+          # Option A: Get sample names from directory names
+          # This looks into resources/regions/, filters out non-directories, and formats as JSON
+          SAMPLES=$(ls -d resources/regions/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          
+          # Option B: If your samples are defined in a Snakemake config.yaml
+          # You could use: SAMPLES=$(python3 -c "import yaml; print(list(yaml.safe_load(open('config/config.yaml'))['samples'].keys()))" | jq -c .)
+          
+          echo "Detected samples: $SAMPLES"
+          echo "samples=$SAMPLES" >> $GITHUB_OUTPUT
+
+  # 2. EVALUATE JOB: Now uses the output from 'setup'
   evaluate:
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 2
       matrix:
-        benchmark:
-          - giab-NA12878-agilent-75M
-          - giab-NA12878-agilent-200M
-          - giab-NA12878-twist
-          - chm-eval
-    permissions:
-      actions: write
-    env:
-      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
-      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
-      TMPDIR: /mnt/tmp
+        # This dynamically injects the list from the setup job
+        sample: ${{ fromJson(needs.setup.outputs.samples) }}
+    
+    # ... rest of your evaluate job ...
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
+      - uses: actions/checkout@v4
+      # ... (disk space, etc.)
+      
+      - name: Run analysis
+        uses: snakemake/snakemake-github-action@v2
         with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          swap-storage: true
-          docker-images: false
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: >
+            --cores 4 --sdm conda 
+            results/benchmarks/${{ matrix.sample }}/results.zip
+          # ... stagein ...
 
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Prepare /mnt workspace
-        run: |
-          sudo mkdir -p /mnt/conda /mnt/tmp
-          sudo chown -R $USER:$USER /mnt/conda /mnt/tmp
-
-      - name: Restore caches (conda + snakemake)
-        uses: actions/cache@v4
-        with:
-          path: |
-            /home/runner/miniconda3/pkgs
-            /home/runner/miniconda3/envs/snakemake
-            /home/runner/.cache/pip
-            /home/runner/.cache/snakemake
-            /mnt/conda
-          key: ${{ runner.os }}-conda-v2-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-conda-v2-
-
-      # This step is necessary (after downloading the truthsets above) to ensure
-      # that the files coming from the git repo are not triggering reruns
-      # because their modification dates are too new or too old.
-      # (as git does not preserve modification dates)
-      - name: Fix modification dates
-        run: touch resources/regions/*/test-regions.cov-*.bed
-
-      - name: Debug - List results directory before run
-        run: |
-          echo "=== Contents of results/ before run ==="
-          ls -la results/ 2>/dev/null || echo "results/ does not exist"
-          echo "=== Contents of .snakemake/ before run ==="
-          ls -la .snakemake/ 2>/dev/null || echo ".snakemake/ does not exist"
-
-      - name: Setup Snakemake environment
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          channels: conda-forge,bioconda
-          activate-environment: snakemake
-          python-version: "3.12"
-
-      - name: Install Snakemake and plugins
-        shell: bash -l {0}
-        run: |
-          conda install -n snakemake -c conda-forge -c bioconda snakemake -y
-          pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
-          snakemake --version
-
-      - name: Debug - Show config and DAG info
-        shell: bash -l {0}
-        run: |
-          echo "=== Benchmark: ${{ matrix.benchmark }} ==="
-          echo "=== Python version ==="
-          python --version
-          echo "=== Snakemake version ==="
-          snakemake --version
-          echo "=== Config filtering check ==="
-          python -c "
-          import yaml
-          with open('config/config.yaml') as f:
-              config = yaml.safe_load(f)
-          benchmark = '${{ matrix.benchmark }}'
-          filtered = {k: v for k, v in config.get('variant-calls', {}).items() if v.get('benchmark') == benchmark}
-          print(f'Callsets for {benchmark}: {list(filtered.keys())}')
-          print(f'Number of callsets: {len(filtered)}')
-          "
-
-      - name: Debug - Dry-run Snakemake with reasons
-        shell: bash -l {0}
-        run: |
-          echo "=== Dry-run to show what jobs would run ==="
-          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
-            --cores 2 --sdm conda --conda-prefix /mnt/conda \
-            --config benchmark=${{ matrix.benchmark }} \
-            --dry-run --printshellcmds --reason 2>&1 | head -200 || echo "Dry-run exit code: $?"
-
-      - name: Create conda environments
-        shell: bash -l {0}
-        run: |
-          echo "=== Creating conda environments first ==="
-          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
-            --cores 2 --sdm conda --conda-prefix /mnt/conda \
-            --config benchmark=${{ matrix.benchmark }} \
-            --conda-create-envs-only
-
-      - name: Run Snakemake
-        shell: bash -l {0}
-        run: |
-          echo "=== Starting Snakemake run ==="
-          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
-            --cores 2 --sdm conda --conda-prefix /mnt/conda \
-            --conda-cleanup-pkgs cache --conda-cleanup-envs \
-            --retries 3 --resources downloads=1 \
-            --config benchmark=${{ matrix.benchmark }} \
-            --printshellcmds --show-failed-logs --nolock
-          echo "=== Snakemake completed with exit code: $? ==="
-
-      - name: Debug - List results directory after run
-        if: always()
-        run: |
-          echo "=== Contents of results/ after run ==="
-          ls -la results/ 2>/dev/null || echo "results/ does not exist"
-          find results/ -type f 2>/dev/null | head -50 || true
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: results-${{ matrix.benchmark }}
-          path: results/
-          retention-days: 1
-
-  # Final job: Combine results and create report
+  # 3. REPORT JOB: Stays the same, but needs both setup and evaluate
   report:
-    needs: evaluate
+    needs: [setup, evaluate]
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    env:
-      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
-    steps:
-      - uses: 8BitJonny/gh-get-current-pr@3.0.0
-        id: pr
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-          filterOutClosed: true
-
-      - run: |
-          echo "is PR: ${{ steps.pr.outputs.pr_found }}"
-          echo "current branch: ${{ github.ref }}"
-
-      - name: Check out repository code
-        uses: actions/checkout@v4
-
-      - name: Restore caches (conda)
-        uses: actions/cache@v4
-        with:
-          path: |
-            /home/runner/miniconda3/pkgs
-            /home/runner/miniconda3/envs/snakemake
-            /home/runner/.cache/pip
-          key: ${{ runner.os }}-conda-v2-${{ hashFiles('workflow/Snakefile', 'workflow/rules/**/*.smk', 'config/config.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-conda-v2-
-
-      - name: Download all results
-        uses: actions/download-artifact@v4
-        with:
-          pattern: results-*
-          path: results/
-          merge-multiple: true
-
-      - name: Debug - Show downloaded results
-        run: |
-          echo "=== Downloaded results structure ==="
-          find results/ -type f 2>/dev/null | head -100 || echo "No files found"
-
-      - name: Setup Snakemake environment
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          channels: conda-forge,bioconda
-          activate-environment: snakemake
-          python-version: "3.12"
-
-      - name: Install Snakemake and plugins
-        shell: bash -l {0}
-        run: |
-          conda install -n snakemake -c conda-forge -c bioconda snakemake -y
-          pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
-
-      - name: Create report
-        shell: bash -l {0}
-        run: |
-          snakemake --directory . --snakefile workflow/Snakefile \
-            --report report.zip benchmark_all
-
-      - name: Upload report as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: report
-          path: report.zip
-
-      - name: Trigger homepage build
-        if: ${{ (steps.pr.outputs.pr_found != 'true') && (github.ref == 'refs/heads/main') }}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: deploy-page
-          repo: ncbench/ncbench.github.io
-          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
+    # ... (same as previous response)
