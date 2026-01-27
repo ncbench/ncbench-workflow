@@ -29,7 +29,7 @@ use rule * from benchmark as benchmark_*
 
 rule all:
     input:
-        rules.benchmark_all.input,
+        rules.benchmark_benchmark_all.input,
 
 
 rule download_zenodo:
