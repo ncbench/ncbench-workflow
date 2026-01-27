@@ -2,12 +2,17 @@ name: benchmark
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ci-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
-  # 1. NEW JOB: Detect samples
+  # 1. SETUP: Detect samples based on directory names
   setup:
     runs-on: ubuntu-latest
     outputs:
@@ -16,43 +21,104 @@ jobs:
       - uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          # Option A: Get sample names from directory names
-          # This looks into resources/regions/, filters out non-directories, and formats as JSON
+          # Finds directories in resources/regions/, gets folder names, and formats as JSON array
           SAMPLES=$(ls -d resources/regions/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
-          
-          # Option B: If your samples are defined in a Snakemake config.yaml
-          # You could use: SAMPLES=$(python3 -c "import yaml; print(list(yaml.safe_load(open('config/config.yaml'))['samples'].keys()))" | jq -c .)
-          
-          echo "Detected samples: $SAMPLES"
           echo "samples=$SAMPLES" >> $GITHUB_OUTPUT
 
-  # 2. EVALUATE JOB: Now uses the output from 'setup'
+  # 2. EVALUATE: Run benchmarks in parallel
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # This dynamically injects the list from the setup job
         sample: ${{ fromJson(needs.setup.outputs.samples) }}
     
-    # ... rest of your evaluate job ...
+    permissions:
+      actions: write
+    
+    env:
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
+      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
+      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
+      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
+      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
-      # ... (disk space, etc.)
-      
-      - name: Run analysis
+
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: true
+
+      - name: Run benchmark analysis
         uses: snakemake/snakemake-github-action@v2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
+          # Target only the results for this specific sample
           args: >
-            --cores 4 --sdm conda 
+            --cores 4 --sdm conda --conda-cleanup-pkgs cache 
+            --rerun-triggers mtime 
             results/benchmarks/${{ matrix.sample }}/results.zip
-          # ... stagein ...
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
 
-  # 3. REPORT JOB: Stays the same, but needs both setup and evaluate
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sample }}
+          path: results/benchmarks/${{ matrix.sample }}/
+          retention-days: 1
+
+  # 3. REPORT: Collect all artifacts and generate the final report
   report:
     needs: [setup, evaluate]
     runs-on: ubuntu-latest
-    # ... (same as previous response)
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: results/benchmarks/
+          # This downloads every artifact from the previous job into its own folder
+
+      - name: Create report
+        uses: snakemake/snakemake-github-action@v2
+        with:
+          directory: "."
+          snakefile: "workflow/Snakefile"
+          args: "--report report.zip"
+          stagein: |
+            pip install snakemake-storage-plugin-zenodo
+            pip install snakemake-storage-plugin-http
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: report.zip
+
+  # 4. DEPLOY: Trigger homepage update
+  deploy:
+    needs: report
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger homepage build
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: deploy-page
+          repo: ncbench/ncbench.github.io
+          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
