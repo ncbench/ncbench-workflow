@@ -127,6 +127,15 @@ jobs:
             --config benchmark=${{ matrix.benchmark }} \
             --dry-run --printshellcmds --reason 2>&1 | head -200 || echo "Dry-run exit code: $?"
 
+      - name: Create conda environments
+        shell: bash -l {0}
+        run: |
+          echo "=== Creating conda environments first ==="
+          snakemake --directory . --snakefile workflow/Snakefile benchmark_all \
+            --cores 2 --sdm conda --conda-prefix /mnt/conda \
+            --config benchmark=${{ matrix.benchmark }} \
+            --conda-create-envs-only
+
       - name: Run Snakemake
         shell: bash -l {0}
         run: |
@@ -136,15 +145,8 @@ jobs:
             --conda-cleanup-pkgs cache --conda-cleanup-envs \
             --retries 3 --resources downloads=1 \
             --config benchmark=${{ matrix.benchmark }} \
-            --printshellcmds 2>&1 || {
-              EXIT_CODE=$?
-              echo "=== Snakemake failed with exit code: $EXIT_CODE ==="
-              echo "=== Checking .snakemake/log/ ==="
-              ls -la .snakemake/log/ 2>/dev/null || echo "No log directory"
-              cat .snakemake/log/*.log 2>/dev/null | tail -200 || echo "No logs found"
-              exit $EXIT_CODE
-            }
-          echo "=== Snakemake completed successfully ==="
+            --printshellcmds --show-failed-logs --nolock
+          echo "=== Snakemake completed with exit code: $? ==="
 
       - name: Debug - List results directory after run
         if: always()
