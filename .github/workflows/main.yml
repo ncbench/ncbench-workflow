@@ -92,9 +92,9 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          # We specify the specific target for this matrix run
           args: >
-            results/benchmarks/${{ matrix.sample }}/results.zip
+            benchmark_all
+            --config benchmark=${{ matrix.sample }}
             --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
           stagein: |
             pip install snakemake-storage-plugin-zenodo
@@ -104,7 +104,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.sample }}
-          path: results/benchmarks/${{ matrix.sample }}/
+          # Upload the workflow outputs (keeps the on-disk paths Snakemake expects).
+          path: results/
           retention-days: 1
 
   # 3. REPORT: Combine and Deploy
@@ -117,7 +118,9 @@ jobs:
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
-          path: results/benchmarks/
+          # Merge all benchmark artifacts back into the workspace so Snakemake sees `results/`.
+          path: .
+          merge-multiple: true
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v2
