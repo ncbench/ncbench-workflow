@@ -78,17 +78,6 @@ jobs:
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
 
-      - name: Fix modification dates
-        uses: snakemake/snakemake-github-action@v2.0.3
-        with:
-          directory: "."
-          snakefile: "workflow/Snakefile"
-          # Only touch the files for THIS matrix sample
-          args: "--cores 1 --sdm conda --touch resources/regions/${{ matrix.sample }}/test-regions.cov-*.bed"
-          stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2
         with:
