@@ -152,7 +152,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.sample }}-${{ matrix.chunk }}
-          # Upload the workflow outputs (keeps the on-disk paths Snakemake sees `results/`.
+          # Upload the workflow outputs (keeps the on-disk paths Snakemake expects).
           path: results/
           retention-days: 1
 
