@@ -25,6 +25,27 @@ if "benchmark" in config:
     }
 
 
+# Filter callsets by chunk if specified via --config chunk_index=... and chunk_size=...
+# This allows splitting large benchmarks into smaller groups to avoid timeouts.
+if "chunk_index" in config and "chunk_size" in config:
+    # Get all variant calls for this benchmark (already filtered above)
+    all_calls = sorted(config["variant-calls"].keys())
+    chunk_index = int(config["chunk_index"])
+    chunk_size = int(config["chunk_size"])
+    
+    # Select the chunk
+    start_idx = chunk_index * chunk_size
+    end_idx = start_idx + chunk_size
+    chunk_calls = all_calls[start_idx:end_idx]
+    
+    # Filter to only this chunk
+    config["variant-calls"] = {
+        key: callset
+        for key, callset in config["variant-calls"].items()
+        if key in chunk_calls
+    }
+
+
 # add path to callsets
 for key, callset in config["variant-calls"].items():
     if "zenodo" in callset:

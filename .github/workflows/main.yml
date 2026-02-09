@@ -11,28 +11,85 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 1. SETUP: Dynamically find the samples
+  # 1. SETUP: Dynamically find the samples and create chunks for large benchmarks
   setup:
     runs-on: ubuntu-latest
     outputs:
-      samples: ${{ steps.set-matrix.outputs.samples }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          # Auto-discover benchmarks from resources/regions/, but only keep
-          # those that include a target regions BED (required by the workflow).
-          SAMPLES=$(for d in resources/regions/*/; do [ -f "$d/target-regions.bed" ] && basename "$d"; done | jq -R -s -c 'split("\n")[:-1]')
-          echo "samples=$SAMPLES" >> $GITHUB_OUTPUT
+          # Create a matrix that splits large benchmarks into chunks to avoid timeouts.
+          # Benchmarks with many variant calls are split into smaller groups.
+          cat > /tmp/generate_matrix.py << 'EOF'
+          import json
+          import yaml
+          import os
 
-  # 2. EVALUATE: The matrix-based analysis
+          # Load config
+          with open('config/config.yaml', 'r') as f:
+              config = yaml.safe_load(f)
+
+          # Find samples (benchmarks with target-regions.bed)
+          samples = []
+          for entry in os.listdir('resources/regions'):
+              path = os.path.join('resources/regions', entry, 'target-regions.bed')
+              if os.path.isfile(path):
+                  samples.append(entry)
+
+          # Group variant calls by benchmark
+          benchmarks = {}
+          for key, callset in config['variant-calls'].items():
+              benchmark = callset.get('benchmark')
+              if benchmark and benchmark in samples:
+                  if benchmark not in benchmarks:
+                      benchmarks[benchmark] = []
+                  benchmarks[benchmark].append(key)
+
+          # Create matrix entries, splitting large benchmarks into chunks
+          matrix = []
+          CHUNK_SIZE = 8  # Max variant calls per job to avoid timeouts
+          
+          for sample in sorted(samples):
+              calls = benchmarks.get(sample, [])
+              num_calls = len(calls)
+              
+              if num_calls <= CHUNK_SIZE:
+                  # Small benchmark - process as a single job
+                  matrix.append({
+                      'sample': sample,
+                      'chunk': 'all',
+                      'chunk_index': 0
+                  })
+              else:
+                  # Large benchmark - split into chunks
+                  num_chunks = (num_calls + CHUNK_SIZE - 1) // CHUNK_SIZE
+                  for i in range(num_chunks):
+                      matrix.append({
+                          'sample': sample,
+                          'chunk': f'{i+1}of{num_chunks}',
+                          'chunk_index': i
+                      })
+
+          print(json.dumps({'include': matrix}))
+          EOF
+
+          python3 /tmp/generate_matrix.py > /tmp/matrix.json
+          MATRIX=$(cat /tmp/matrix.json)
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+          echo "Generated matrix:" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          cat /tmp/matrix.json | jq . >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  # 2. EVALUATE: The matrix-based analysis (split by sample and chunk)
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        sample: ${{ fromJson(needs.setup.outputs.samples) }}
+      matrix: ${{fromJson(needs.setup.outputs.matrix)}}
     env:
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
       ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
@@ -73,7 +130,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth --config benchmark=${{ matrix.sample }}"
+          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=8"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
@@ -85,7 +142,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: >
             benchmark_all
-            --config benchmark=${{ matrix.sample }}
+            --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=8
             --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
           stagein: |
             pip install snakemake-storage-plugin-zenodo
@@ -94,8 +151,8 @@ jobs:
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.sample }}
-          # Upload the workflow outputs (keeps the on-disk paths Snakemake expects).
+          name: ${{ matrix.sample }}-${{ matrix.chunk }}
+          # Upload the workflow outputs (keeps the on-disk paths Snakemake sees `results/`.
           path: results/
           retention-days: 1
 
