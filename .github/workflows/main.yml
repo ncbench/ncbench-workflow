@@ -49,7 +49,7 @@ jobs:
 
           # Create matrix entries, splitting large benchmarks into chunks
           matrix = []
-          CHUNK_SIZE = 8  # Max variant calls per job to avoid timeouts
+          CHUNK_SIZE = 4  # Max variant calls per job to avoid timeouts
           
           for sample in sorted(samples):
               calls = benchmarks.get(sample, [])
@@ -130,7 +130,7 @@ jobs:
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
-          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=8"
+          args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=4"
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
@@ -142,7 +142,7 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: >
             benchmark_all
-            --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=8
+            --config benchmark=${{ matrix.sample }} chunk_index=${{ matrix.chunk_index }} chunk_size=4
             --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
           stagein: |
             pip install snakemake-storage-plugin-zenodo
@@ -159,6 +159,8 @@ jobs:
   # 3. REPORT: Combine and Deploy
   report:
     needs: evaluate
+    # Run report even if some evaluate jobs fail, as long as at least one succeeded
+    if: ${{ !cancelled() && (success() || failure()) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -166,7 +168,8 @@ jobs:
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
-          # Merge all benchmark artifacts back into the workspace so Snakemake sees `results/`.
+          # Download all available artifacts (some may be missing if jobs failed)
+          pattern: "*-*"
           path: .
           merge-multiple: true
 
