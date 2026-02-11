@@ -168,8 +168,8 @@ jobs:
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
-          # Download all available artifacts (some may be missing if jobs failed)
-          pattern: "*-*"
+          # Download all available benchmark artifacts (pattern: giab-*-*)
+          pattern: "giab-*"
           path: .
           merge-multiple: true
 
