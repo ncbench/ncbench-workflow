@@ -33,7 +33,7 @@ jobs:
         run: |
           # Auto-discover benchmarks from resources/regions/, but only keep
           # those that include a test regions BED (required by the workflow).
-          SAMPLES=$(for d in resources/regions/*/; do [ -f "$d/test-regions.bed" ] && basename "$d"; done | jq -R -s -c 'split("\n")[:-1]')
+          SAMPLES=$(for d in resources/regions/*/; do [ -f "$d/test-regions.cov-lc_high.bed" ] && basename "$d"; done | jq -R -s -c 'split("\n")[:-1]')
           echo "samples=$SAMPLES" >> $GITHUB_OUTPUT
 
   # 2. EVALUATE: The matrix-based analysis
