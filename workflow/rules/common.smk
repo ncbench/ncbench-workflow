@@ -5,6 +5,26 @@ def get_zenodo_tag(entry):
         return "zenodo"
 
 
+# Filter callsets by subcategory if specified via --config subcategory=...
+# This allows running benchmarks in parallel across multiple CI runners
+if "subcategory" in config:
+    config["variant-calls"] = {
+        key: callset
+        for key, callset in config["variant-calls"].items()
+        if callset.get("subcategory") == config["subcategory"]
+    }
+
+
+# Filter callsets by benchmark if specified via --config benchmark=...
+# This allows splitting CI work further (e.g. giab-NA12878-agilent-75M vs 200M).
+if "benchmark" in config:
+    config["variant-calls"] = {
+        key: callset
+        for key, callset in config["variant-calls"].items()
+        if callset.get("benchmark") == config["benchmark"]
+    }
+
+
 # add path to callsets
 for key, callset in config["variant-calls"].items():
     if "zenodo" in callset:
