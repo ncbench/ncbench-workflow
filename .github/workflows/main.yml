@@ -126,7 +126,7 @@ jobs:
           path: results/
           merge-multiple: true
       
-      - run: tree -L 3
+      - run: tree -L 6
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v2.1.1
