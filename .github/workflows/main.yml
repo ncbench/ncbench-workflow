@@ -123,7 +123,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           # Merge all benchmark artifacts back into the workspace so Snakemake sees `results/`.
-          path: .
+          path: results/
           merge-multiple: true
       
       - run: tree -L 3
