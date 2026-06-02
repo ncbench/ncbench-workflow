@@ -123,6 +123,8 @@ jobs:
           # Merge all benchmark artifacts back into the workspace so Snakemake sees `results/`.
           path: .
           merge-multiple: true
+      
+      - run: tree -L 3
 
       - name: Create report
         uses: snakemake/snakemake-github-action@v2.1.1
