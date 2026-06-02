@@ -11,6 +11,16 @@ on:
 #  group: ci-${{ github.head_ref || github.run_id }}
 #  cancel-in-progress: true
 
+env:
+  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+  ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+  BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
+  BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
+  CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
+  BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
+  BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
+  SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
+
 jobs:
   # 1. SETUP: Dynamically find the samples
   setup:
@@ -34,15 +44,6 @@ jobs:
       fail-fast: false
       matrix:
         sample: ${{ fromJson(needs.setup.outputs.samples) }}
-    env:
-      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-      ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-      BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-      BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-      CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-      BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-      BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
-      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
 
     steps:
       - name: Free Disk Space (Ubuntu)
