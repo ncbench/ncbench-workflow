@@ -99,10 +99,13 @@ jobs:
           args: >
             benchmark_all
             --config benchmark=${{ matrix.sample }}
-            --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --cores 4 --sdm conda --conda-cleanup-pkgs cache
+            --rerun-triggers mtime --all-temp
+            --logger github-status --logger-github-status-run-name ${{ matrix.sample }}
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+            pip install snakemake-logger-plugin-github-status
 
       - name: Upload results
         uses: actions/upload-artifact@v4
