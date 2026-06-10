@@ -96,6 +96,8 @@ jobs:
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
