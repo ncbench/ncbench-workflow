@@ -40,6 +40,9 @@ jobs:
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
