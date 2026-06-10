@@ -105,7 +105,7 @@ jobs:
             benchmark_all
             --config benchmark=${{ matrix.sample }}
             --cores 4 --sdm conda --conda-cleanup-pkgs cache
-            --rerun-triggers mtime --all-temp
+            --rerun-triggers mtime --all-temp --verbose
             --logger github-status --logger-github-status-run-name ${{ matrix.sample }}
           stagein: |
             pip install snakemake-storage-plugin-zenodo
