@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 # DBG, check if concurrency is the issue
-#concurrency:
-#  group: ci-${{ github.head_ref || github.run_id }}
-#  cancel-in-progress: true
+concurrency:
+  group: ci-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 env:
   FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
@@ -40,6 +40,9 @@ jobs:
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -93,16 +96,21 @@ jobs:
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
           args: >
             benchmark_all
             --config benchmark=${{ matrix.sample }}
-            --cores 4 --sdm conda --conda-cleanup-pkgs cache --rerun-triggers mtime --all-temp
+            --cores 4 --sdm conda --conda-cleanup-pkgs cache
+            --rerun-triggers mtime --all-temp --verbose
+            --logger github-status --logger-github-status-run-name ${{ matrix.sample }}
           stagein: |
             pip install snakemake-storage-plugin-zenodo
             pip install snakemake-storage-plugin-http
+            pip install snakemake-logger-plugin-github-status
 
       - name: Upload results
         uses: actions/upload-artifact@v4
