@@ -3,23 +3,13 @@ name: benchmark
 on:
   push:
     branches: [main]
-  pull_request:
+  pull_request_target:
   workflow_dispatch:
 
 # DBG, check if concurrency is the issue
 concurrency:
   group: ci-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
-
-env:
-  FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-  ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
-  BENCHMARK_GIAB_NA12878_AGILENT_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_AGILENT_TOKEN }}
-  BO_AGILENT_TOKEN: ${{ secrets.BO_AGILENT_TOKEN }}
-  CO_AGILENT_TOKEN: ${{ secrets.CO_AGILENT_TOKEN }}
-  BO_CORE_UNIT_TOKEN: ${{ secrets.BO_CORE_UNIT_TOKEN }}
-  BENCHMARK_GIAB_NA12878_TWIST_TOKEN: ${{ secrets.BENCHMARK_GIAB_NA12878_TWIST_TOKEN }}
-  SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
 
 jobs:
   # 1. SETUP: Dynamically find the samples
@@ -28,7 +18,10 @@ jobs:
     outputs:
       samples: ${{ steps.set-matrix.outputs.samples }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
       - id: set-matrix
         run: |
           # Auto-discover benchmarks from resources/regions/, but only keep
@@ -40,6 +33,9 @@ jobs:
   evaluate:
     needs: setup
     runs-on: ubuntu-latest
+    environment: snakemake-workflow
+    env:
+      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     permissions:
       statuses: write
       contents: read
@@ -62,6 +58,8 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download reference genome
         uses: snakemake/snakemake-github-action@v2.1.1
@@ -124,8 +122,13 @@ jobs:
   report:
     needs: evaluate
     runs-on: ubuntu-latest
+    environment: snakemake-workflow
+    env:
+      SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download all results
         uses: actions/download-artifact@v4
