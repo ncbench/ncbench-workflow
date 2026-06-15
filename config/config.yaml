@@ -745,6 +745,23 @@ variant-calls:
       filename: NA12878_200M.haplotypecaller.filtered.vcf.gz
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: true
+  deep-variant-NA12878-200M-agilent:
+    labels:
+      site: ioit
+      pipeline: deepvariant
+      trimming: bwa
+      read-mapping: bwa
+      base-quality-recalibration: gatk4
+      realignment: none
+      variant-detection: deepvariant
+      genotyping: none
+      reads: 200M
+    subcategory: NA12878
+    zenodo:
+      deposition: 15487705
+      filename: A006850052_NA12878_200M_BWA_DV_STANDART.vcf
+    benchmark: giab-NA12878-agilent-200M
+    rename-contigs: true
 custom-benchmarks:
   giab-NA12878-agilent-200M:
     zenodo:
