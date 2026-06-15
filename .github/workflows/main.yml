@@ -160,7 +160,7 @@ jobs:
           path: report.zip
 
       - name: Trigger homepage build
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: deploy-page
