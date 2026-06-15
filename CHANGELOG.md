@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ncbench/ncbench-workflow/compare/v1.3.0...v1.4.0) (2026-06-13)
+
+
+### Features
+
+* bump to dna-seq-benchmark 1.14.1, split github action into matrix ([#61](https://github.com/ncbench/ncbench-workflow/issues/61)) ([0ce7841](https://github.com/ncbench/ncbench-workflow/commit/0ce7841670813beb64a440c392efbf4f9c518b29))
+
 ## [1.3.0](https://github.com/ncbench/ncbench-workflow/compare/v1.2.0...v1.3.0) (2025-08-05)
 
 
