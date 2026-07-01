@@ -18,7 +18,7 @@ jobs:
     outputs:
       samples: ${{ steps.set-matrix.outputs.samples }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -59,12 +59,12 @@ jobs:
           docker-images: false
 
       - name: Check out repository code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download reference genome
-        uses: snakemake/snakemake-github-action@v2.1.1
+        uses: snakemake/snakemake-github-action@v2.1.2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -74,7 +74,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Download truthsets
-        uses: snakemake/snakemake-github-action@v2.1.1
+        uses: snakemake/snakemake-github-action@v2.1.2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -84,7 +84,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Fix modification dates
-        uses: snakemake/snakemake-github-action@v2.1.1
+        uses: snakemake/snakemake-github-action@v2.1.2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -95,7 +95,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Run analysis
-        uses: snakemake/snakemake-github-action@v2.1.1
+        uses: snakemake/snakemake-github-action@v2.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -113,7 +113,7 @@ jobs:
             pip install snakemake-logger-plugin-github-status
 
       - name: Upload results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.sample }}
           # Upload the workflow outputs (keeps the on-disk paths Snakemake expects).
@@ -130,12 +130,12 @@ jobs:
     env:
       SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN: ${{ secrets.SNAKEMAKE_STORAGE_ZENODO_ACCESS_TOKEN }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Download all results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           # Merge all benchmark artifacts back into the workspace so Snakemake sees `results/`.
           path: results/
@@ -144,7 +144,7 @@ jobs:
       - run: tree -L 6
 
       - name: Create report
-        uses: snakemake/snakemake-github-action@v2.1.1
+        uses: snakemake/snakemake-github-action@v2.1.2
         with:
           directory: "."
           snakefile: "workflow/Snakefile"
@@ -154,7 +154,7 @@ jobs:
             pip install snakemake-storage-plugin-http
 
       - name: Upload final report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: report
           path: report.zip
