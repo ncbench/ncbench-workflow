@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/ncbench/ncbench-workflow/compare/v1.4.0...v1.5.0) (2026-07-01)
+
+
+### Features
+
+* add deep-variant-NA12878-200M-agilent ([#51](https://github.com/ncbench/ncbench-workflow/issues/51)) ([ffa7b75](https://github.com/ncbench/ncbench-workflow/commit/ffa7b75f4b62a273cb91d0fcc9ced5bdfb43f8f8))
+
 ## [1.4.0](https://github.com/ncbench/ncbench-workflow/compare/v1.3.0...v1.4.0) (2026-06-13)
 
 
