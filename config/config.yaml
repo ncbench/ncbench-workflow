@@ -762,6 +762,21 @@ variant-calls:
       filename: A006850052_NA12878_200M_BWA_DV_STANDART.vcf
     benchmark: giab-NA12878-agilent-200M
     rename-contigs: true
+  strelka_default-75M-agilent:
+    labels:
+      site: CL
+      pipeline: strelka-default
+      trimming: FastP v0.23.4
+      read-mapping: BWA_MEM docker-pcapcore_5.6.1
+      variant-detection:  strelka2 v2.9.10
+      genotyping: none
+      reads: 75M
+    subcategory: NA12878-agilent
+    zenodo:
+      deposition: 21399917
+      filename: BWA_STRELKA_PASS.vcf.gz
+    benchmark: giab-NA12878-agilent-75M
+    rename-contigs: true
 custom-benchmarks:
   giab-NA12878-agilent-200M:
     zenodo:
