@@ -70,8 +70,8 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--cores 1 --sdm conda --conda-cleanup-pkgs cache resources/reference/genome.fasta"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+            conda install -y --name snakemake pip
+            python -m pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Download truthsets
         uses: snakemake/snakemake-github-action@v2.1.2
@@ -80,8 +80,8 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--sdm conda --cores 1 --conda-cleanup-pkgs cache --until benchmark_get_truth --config benchmark=${{ matrix.sample }}"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+            conda install -y --name snakemake pip
+            python -m pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Fix modification dates
         uses: snakemake/snakemake-github-action@v2.1.2
@@ -91,8 +91,8 @@ jobs:
           # Only touch the files for THIS matrix sample
           args: "--cores 1 --sdm conda --touch resources/regions/${{ matrix.sample }}/test-regions.cov-*.bed"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+            conda install -y --name snakemake pip
+            python -m pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Run analysis
         uses: snakemake/snakemake-github-action@v2.1.2
@@ -108,9 +108,8 @@ jobs:
             --rerun-triggers mtime --all-temp --verbose
             --logger github-status --logger-github-status-run-name ${{ matrix.sample }}
           stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
-            pip install snakemake-logger-plugin-github-status
+            conda install -y --name snakemake pip
+            python -m pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http snakemake-logger-plugin-github-status
 
       - name: Upload results
         uses: actions/upload-artifact@v7
@@ -150,8 +149,8 @@ jobs:
           snakefile: "workflow/Snakefile"
           args: "--report report.zip"
           stagein: |
-            pip install snakemake-storage-plugin-zenodo
-            pip install snakemake-storage-plugin-http
+            conda install -y --name snakemake pip
+            python -m pip install snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
 
       - name: Upload final report
         uses: actions/upload-artifact@v7
