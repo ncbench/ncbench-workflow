@@ -12,14 +12,21 @@ on:
 env:
   WORKFLOW_REF: ${{ github.event.pull_request.head.sha || github.sha }}
 
-# DBG, check if concurrency is the issue
+# One concurrency group per event: pull_request and pull_request_target both
+# fire on the same push to a branch and share github.head_ref, so a single
+# group made them cancel each other and the matrix never ran.
 concurrency:
-  group: ci-${{ github.head_ref || github.run_id }}
+  group: ci-${{ github.event_name }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
   # 1. SETUP: Dynamically find the samples
   setup:
+    # The workflow definition comes from main on pull_request_target, so a PR
+    # that predates pull_request (e.g. #72) would run this stale copy twice and
+    # cancel itself. pull_request is the copy that can be tested, so only it
+    # and push/dispatch run here.
+    if: github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
     outputs:
       samples: ${{ steps.set-matrix.outputs.samples }}
