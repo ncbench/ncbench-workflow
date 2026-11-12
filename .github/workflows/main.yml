@@ -22,11 +22,14 @@ concurrency:
 jobs:
   # 1. SETUP: Dynamically find the samples
   setup:
-    # The workflow definition comes from main on pull_request_target, so a PR
-    # that predates pull_request (e.g. #72) would run this stale copy twice and
-    # cancel itself. pull_request is the copy that can be tested, so only it
-    # and push/dispatch run here.
-    if: github.event_name != 'pull_request_target'
+    # pull_request and pull_request_target both fire on a same-repo PR and would
+    # run the identical matrix twice. The pull_request run reads this file; the
+    # pull_request_target run reads main's copy. So on the pull_request_target
+    # path only fork PRs proceed - those get no secrets on pull_request, and the
+    # fork path must keep using the base branch's definition.
+    if: >-
+      github.event_name != 'pull_request_target' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     outputs:
       samples: ${{ steps.set-matrix.outputs.samples }}
