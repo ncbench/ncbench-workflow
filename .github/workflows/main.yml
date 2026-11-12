@@ -118,7 +118,7 @@ jobs:
           stagein: |
             conda install -y --name snakemake snakemake-storage-plugin-zenodo snakemake-storage-plugin-http
             conda install -y --name snakemake pip
-            python -m pip install snakemake-logger-plugin-github-status
+            conda run -n snakemake python -m pip install --no-input snakemake-logger-plugin-github-status
           args: >
             benchmark_all
             --config benchmark=${{ matrix.sample }}
