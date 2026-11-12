@@ -3,6 +3,7 @@ name: benchmark
 on:
   push:
     branches: [main]
+  pull_request:
   pull_request_target:
   workflow_dispatch:
 
